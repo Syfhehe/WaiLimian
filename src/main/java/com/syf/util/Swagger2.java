@@ -1,4 +1,4 @@
-package com.ibm.cam.spring.util;
+package com.syf.util;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ public class Swagger2 {
                 .protocols(Sets.newHashSet("http"))
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ibm.cam.spring.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.syf.api"))
                 .paths(PathSelectors.any())
                 .build();
     }

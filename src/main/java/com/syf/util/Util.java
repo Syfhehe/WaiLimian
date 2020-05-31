@@ -1,4 +1,4 @@
-package com.ibm.cam.spring.util;
+package com.syf.util;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;

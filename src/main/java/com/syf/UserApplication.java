@@ -1,4 +1,4 @@
-package com.ibm.cam.spring;
+package com.syf;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

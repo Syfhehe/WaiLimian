@@ -1,11 +1,12 @@
-package com.ibm.cam.spring.api;
+package com.syf.api;
 
-import com.ibm.cam.spring.domain.User;
-import com.ibm.cam.spring.exception.NotFoundException;
-import com.ibm.cam.spring.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.syf.domain.User;
+import com.syf.exception.NotFoundException;
+import com.syf.service.UserService;
 
 import java.util.List;
 

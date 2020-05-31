@@ -1,16 +1,18 @@
-package com.ibm.cam.spring.service;
+package com.syf.service;
 
-import com.ibm.cam.spring.domain.User;
-import com.ibm.cam.spring.exception.NotFoundException;
-import com.ibm.cam.spring.exception.Result;
-import com.ibm.cam.spring.repository.UserRepository;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.syf.domain.User;
+import com.syf.exception.NotFoundException;
+import com.syf.exception.Result;
+import com.syf.repository.UserRepository;
+
 import java.util.List;
 
-import static com.ibm.cam.spring.util.Util.getNullPropertyNames;
+import static com.syf.util.Util.getNullPropertyNames;
 
 @Service
 public class UserService

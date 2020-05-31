@@ -1,4 +1,4 @@
-package com.ibm.cam.spring.exception;
+package com.syf.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

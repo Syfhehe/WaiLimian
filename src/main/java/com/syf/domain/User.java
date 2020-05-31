@@ -1,4 +1,4 @@
-package com.ibm.cam.spring.domain;
+package com.syf.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

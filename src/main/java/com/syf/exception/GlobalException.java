@@ -1,4 +1,4 @@
-package com.ibm.cam.spring.exception;
+package com.syf.exception;
 
 public class GlobalException extends Exception {
 

@@ -64,7 +64,12 @@
 		</dependency>
 
 	</dependencies>
-
+	<repositories>
+		<repository>
+			<id>ali-maven</id>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
 	<build>
 		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
 				defaults (may be moved to parent pom) -->

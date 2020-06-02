@@ -4,8 +4,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.syf.domain.User;
 import com.syf.exception.NotFoundException;
+import com.syf.model.User;
 import com.syf.service.UserService;
 
 import java.util.List;

@@ -5,9 +5,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.syf.domain.User;
 import com.syf.exception.NotFoundException;
 import com.syf.exception.Result;
+import com.syf.model.User;
 import com.syf.repository.UserRepository;
 
 import java.util.List;

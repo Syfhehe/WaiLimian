@@ -38,7 +38,7 @@ public class User implements Serializable {
 
 	protected User() {
 	}
-
+		
 	/**
 	 * Constructor.
 	 * 

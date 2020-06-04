@@ -15,7 +15,7 @@ import java.util.List;
 import static com.syf.util.Util.getNullPropertyNames;
 
 @Service
-public class UserService
+public class ProjectService
 {
     @Autowired
     private UserRepository userRepository;

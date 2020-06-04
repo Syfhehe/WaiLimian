@@ -32,21 +32,21 @@ public class UserController
 
     @ApiOperation(value="获取用户信息", notes="根据id获取用户信息")
     @GetMapping(value = "/users/{id}")
-    public Object getUser(@PathVariable("id") String id) throws NotFoundException
+    public Object getUser(@PathVariable("id") Long id) throws NotFoundException
     {
         return userService.getUser(id);
     }
 
     @ApiOperation(value="删除用户", notes="根据id删除用户")
     @DeleteMapping(value = "/users/{id}")
-    public void deleteUser(@PathVariable("id") String id)
+    public void deleteUser(@PathVariable("id") Long id)
     {
         userService.deleteUser(id);
     }
 
     @ApiOperation(value="更新用户", notes="更新用户")
     @PatchMapping(value = "/users/{id}")
-    public User updateUser(@PathVariable("id") String id, @RequestBody User user)
+    public User updateUser(@PathVariable("id") Long id, @RequestBody User user)
     {
         return userService.update(id, user);
     }

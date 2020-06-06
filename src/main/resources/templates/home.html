@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- required = "required" meta tags -->
+<meta charset="UTF-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+<link href="css/main.css" rel="stylesheet"></link>
+
+<title>Spring Boot File Upload / Download Rest API Example</title>
+
+<!-- Bootstrap CSS -->
+</head>
+<body>
+	<noscript>
+		<h2>Sorry! Your browser doesn't support Javascript</h2>
+	</noscript>
+	<div th:replace="fragments/header :: header"></div>
+
+	<div class="container">
+
+
+		<div>
+			<form class="bs-example bs-example-form" role="form">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="input-group">
+							<input type="text" id="fileNameInput" class="form-control"></input> <span
+								class="input-group-btn">
+								<a class="btn btn-default" id="searchFileButton" type="button">搜索文件</a>
+							</span>
+						</div>
+						<!-- /input-group -->
+					</div>
+					<!-- /.col-lg-6 -->
+				</div>
+				<!-- /.row -->
+			</form>
+		</div>
+
+		<div>
+			<table id="fileTable" class="table table-striped">
+				<h3>文件列表</h3>
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>文件名</th>
+						<th>字数</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="fileMode,fileModeStat : ${fileModes}">
+						<td th:text="${fileModeStat.count}"></td>
+						<td th:text="${fileMode.fileName}"></td>
+						<td th:text="${fileMode.wordCount}"></td>
+						<td><a th:href="@{'/file?fileId=' + ${fileMode.id}}"
+							type="button" data-toggle="modal" data-target="#fileDetailModal"
+							class="btn btn-primary btn-sm" style="margin-right: 15px;">访问</a>
+							<a th:if="${role}=='ADMIN'" th:id="${fileMode.id}" type="button"
+							class="deleteButton btn btn-primary  btn-sm"
+							style="margin-right: 15px;">删除</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<hr></hr>
+
+		<div class="single-upload" th:if="${role}=='ADMIN'">
+			<h3>文件上传</h3>
+			<form id="singleUploadForm" name="singleUploadForm">
+				<input id="singleFileUploadInput" type="file" name="file"
+					class="file-input" required="required"></input>
+
+				<button type="submit" class="primary submit-btn">Submit</button>
+			</form>
+			<div class="upload-response">
+				<div id="singleFileUploadError"></div>
+				<div id="singleFileUploadSuccess"></div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="fileDetailModal" tabindex="-1"
+			role="dialog" aria-labelledby="fileDetailModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div th:replace="fragments/fileDetailForm :: fileDetailForm"></div>
+				</div>
+			</div>
+		</div>
+
+
+		<div
+			th:replace="fragments/footer :: footer(libs='fileUpload, main, profile')"></div>
+	</div>
+
+</body>
+</html>

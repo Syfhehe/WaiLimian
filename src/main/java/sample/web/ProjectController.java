@@ -1,8 +1,14 @@
 package sample.web;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -10,61 +16,90 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import exception.NotFoundException;
 import io.swagger.annotations.ApiOperation;
+import sample.eum.AreaEnum;
+import sample.eum.LaterEnum;
+import sample.eum.ScopeEnum;
+import sample.eum.ShapeEnum;
+import sample.eum.StyleEnum;
+import sample.eum.VerticalEnum;
 import sample.model.Project;
+import sample.model.User;
 import sample.service.ProjectService;
+import sample.service.UserService;
 
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
-  
+
   @Autowired
   private ProjectService projectService;
   
-  @ApiOperation(value="获取项目列表", notes="获取项目列表")
+  @Autowired
+  private UserService userSerivce;
+
+  @ApiOperation(value = "获取项目列表", notes = "获取项目列表")
   @GetMapping(value = "/projects")
-  public List<Project> getProjectList()
-  {
-      return projectService.getProjectList();
+  public List<Project> getProjectList() {
+    return projectService.getProjectList();
   }
 
-  @ApiOperation(value="添加项目", notes="添加项目")
+  @ApiOperation(value = "添加项目", notes = "添加项目")
   @PostMapping(value = "/projects")
-  public Object addProject(@RequestBody Project project){
-      return projectService.addProject(project);
+  public Object addProject(@RequestBody Project project) {
+    User user = userSerivce.getCurrentUser();
+    project.setOpUser(user);
+    project.setCreator(user);
+    return projectService.addProject(project);
   }
 
-  @ApiOperation(value="获取项目信息", notes="根据id获取项目信息")
+  @ApiOperation(value = "获取项目信息", notes = "根据id获取项目信息")
   @GetMapping(value = "/projects/{id}")
-  public Object getProject(@PathVariable("id") Long id) throws NotFoundException
-  {
-      return projectService.getProject(id);
+  public Object getProject(@PathVariable("id") Long id) throws NotFoundException {
+    return projectService.getProject(id);
   }
 
-  @ApiOperation(value="删除项目", notes="根据id删除项目")
+  @ApiOperation(value = "删除项目", notes = "根据id删除项目")
   @DeleteMapping(value = "/projects/{id}")
-  public void deleteProject(@PathVariable("id") Long id)
-  {
-      projectService.deleteProject(id);
+  public void deleteProject(@PathVariable("id") Long id) {
+    projectService.deleteProject(id);
   }
 
-  @ApiOperation(value="更新项目", notes="更新项目")
-  @PatchMapping(value = "/projects/{id}")
-  public Project updateProject(@PathVariable("id") Long id, @RequestBody Project project)
-  {
-      return projectService.update(id, project);
+  @ApiOperation(value = "更新项目", notes = "更新项目")
+  @PostMapping(value = "/projects/update")
+  public Project updateProject(@RequestBody Project project) {
+    User user = userSerivce.getCurrentUser();
+    project.setOpUser(user);
+    project.setOpenTime(new Date());
+    return projectService.update(project);
   }
 
+  @ApiOperation(value = "查询项目", notes = "查询项目")
+  @GetMapping(value = "/projects/search")
+  public Page<Project> searchProjects(@RequestParam(value = "name", defaultValue = "") String name,
+      @RequestParam(value = "position", defaultValue = "") String position,
+      @RequestParam(value = "area", defaultValue = "") AreaEnum area,
+      @RequestParam(value = "style", defaultValue = "") StyleEnum style,
+      @RequestParam(value = "shape", defaultValue = "") ShapeEnum shape,
+      @RequestParam(value = "scope", defaultValue = "") ScopeEnum scope,
+      @RequestParam(value = "later", defaultValue = "") LaterEnum later,
+      @RequestParam(value = "vertical", defaultValue = "") VerticalEnum vertical,
+      @RequestParam(value = "page", defaultValue = "0") Integer page,
+      @RequestParam(value = "size", defaultValue = "15") Integer size) {
+    Sort sort = new Sort(Direction.DESC, "id");
+    Pageable pageable = new PageRequest(page, size, sort);
+    return projectService.findAllProject(pageable, name, position, area, style, shape, scope, later,
+        vertical);
+  }
 
-  @ApiOperation(value="测试")
+  @ApiOperation(value = "测试")
   @GetMapping(value = "/test")
-  public String test()
-  {
-      return "test ok!";
+  public String test() {
+    return "test ok!";
   }
-  
 
 }

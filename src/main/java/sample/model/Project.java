@@ -1,7 +1,10 @@
 package sample.model;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,14 +23,14 @@ import sample.eum.ScopeEnum;
 import sample.eum.ShapeEnum;
 import sample.eum.StyleEnum;
 import sample.eum.VerticalEnum;
+import sample.util.StringListConverter;
 
 @Table(name = "project")
 @Entity
 public class Project {
 
   @Id
-  @NotNull
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @NotNull
@@ -92,15 +95,17 @@ public class Project {
   @Column
   private  Date updateTime;
   
-  @Column
-  private String opType;
-  
   @ManyToOne
   private User opUser;
   
-  @Column
-  private String picPaths;
+  @ManyToOne
+  private User creator;
   
+  @Convert(converter = StringListConverter.class)
+  private List<String> picPaths;
+  
+  @Column
+  private Boolean tag;
   
   public Long getId() {
     return id;
@@ -254,14 +259,6 @@ public class Project {
     this.updateTime = updateTime;
   }
 
-  public String getOpType() {
-    return opType;
-  }
-
-  public void setOpType(String opType) {
-    this.opType = opType;
-  }
-
   public User getOpUser() {
     return opUser;
   }
@@ -270,12 +267,28 @@ public class Project {
     this.opUser = opUser;
   }
 
-  public String getPicPaths() {
+  public List<String> getPicPaths() {
     return picPaths;
   }
 
-  public void setPicPaths(String picPaths) {
+  public void setPicPaths(List<String> picPaths) {
     this.picPaths = picPaths;
+  }
+
+  public Boolean getTag() {
+    return tag;
+  }
+
+  public void setTag(Boolean tag) {
+    this.tag = tag;
+  }
+
+  public User getCreator() {
+    return creator;
+  }
+
+  public void setCreator(User creator) {
+    this.creator = creator;
   }
 
 }

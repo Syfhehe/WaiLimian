@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +22,7 @@ import exception.NotFoundException;
 import io.swagger.annotations.ApiOperation;
 import sample.eum.AreaEnum;
 import sample.eum.LaterEnum;
+import sample.eum.PositionEnum;
 import sample.eum.ScopeEnum;
 import sample.eum.ShapeEnum;
 import sample.eum.StyleEnum;
@@ -33,7 +33,7 @@ import sample.service.ProjectService;
 import sample.service.UserService;
 
 @RestController
-@RequestMapping("/api/project")
+@RequestMapping("")
 public class ProjectController {
 
   @Autowired
@@ -81,15 +81,15 @@ public class ProjectController {
   @ApiOperation(value = "查询项目", notes = "查询项目")
   @GetMapping(value = "/projects/search")
   public Page<Project> searchProjects(@RequestParam(value = "name", defaultValue = "") String name,
-      @RequestParam(value = "position", defaultValue = "") String position,
+      @RequestParam(value = "position", defaultValue = "") PositionEnum position,
       @RequestParam(value = "area", defaultValue = "") AreaEnum area,
       @RequestParam(value = "style", defaultValue = "") StyleEnum style,
       @RequestParam(value = "shape", defaultValue = "") ShapeEnum shape,
       @RequestParam(value = "scope", defaultValue = "") ScopeEnum scope,
       @RequestParam(value = "later", defaultValue = "") LaterEnum later,
       @RequestParam(value = "vertical", defaultValue = "") VerticalEnum vertical,
-      @RequestParam(value = "page", defaultValue = "0") Integer page,
-      @RequestParam(value = "size", defaultValue = "15") Integer size) {
+      @RequestParam(value = "page", defaultValue = "1") Integer page,
+      @RequestParam(value = "size", defaultValue = "12") Integer size) {
     Sort sort = new Sort(Direction.DESC, "id");
     Pageable pageable = new PageRequest(page, size, sort);
     return projectService.findAllProject(pageable, name, position, area, style, shape, scope, later,

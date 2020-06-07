@@ -12,6 +12,7 @@ import exception.NotFoundException;
 import exception.Result;
 import sample.eum.AreaEnum;
 import sample.eum.LaterEnum;
+import sample.eum.PositionEnum;
 import sample.eum.ScopeEnum;
 import sample.eum.ShapeEnum;
 import sample.eum.StyleEnum;
@@ -66,30 +67,49 @@ public class ProjectService {
     return projectRepository.save(currentInstance);
   }
 
-  public Page<Project> findAllProject(Pageable pageable, String name, String position,
+  public Page<Project> findAllProject(Pageable pageable, String name, PositionEnum position,
       AreaEnum area, StyleEnum style, ShapeEnum shape, ScopeEnum scope, LaterEnum later,
       VerticalEnum vertical) {
     Specification<Project> specification = new Specification<Project>() {
 
       public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-        // 用于暂时存放查询条件的集合
         List<Predicate> predicatesList = new ArrayList<>();
-        // --------------------------------------------
-        // 查询条件示例
-        // equal示例
+
         if (StringUtils.isNotBlank(name)) {
           Predicate namePredicate = cb.like(root.get("name"), '%' + name + '%');
           predicatesList.add(namePredicate);
         }
-        if (StringUtils.isNotBlank(position)) {
+        if (position != null) {
           Predicate positionPredicate = cb.equal(root.get("position"), position);
           predicatesList.add(positionPredicate);
         }
-        // --------------------------------------------
-        // 排序示例(先根据学号排序，后根据姓名排序)
+        if (area != null) {
+          Predicate areaPredicate = cb.equal(root.get("area"), area);
+          predicatesList.add(areaPredicate);
+        }
+        if (style != null) {
+          Predicate stylePredicate = cb.equal(root.get("style"), style);
+          predicatesList.add(stylePredicate);
+        }
+
+        if (shape != null) {
+          Predicate shapePredicate = cb.equal(root.get("shape"), shape);
+          predicatesList.add(shapePredicate);
+        }
+
+        if (scope != null) {
+          Predicate scopePredicate = cb.equal(root.get("scope"), scope);
+          predicatesList.add(scopePredicate);
+        }
+        if (later != null) {
+          Predicate laterPredicate = cb.equal(root.get("later"), later);
+          predicatesList.add(laterPredicate);
+        }
+        if (vertical != null) {
+          Predicate verticalPredicate = cb.equal(root.get("vertical"), vertical);
+          predicatesList.add(verticalPredicate);
+        }
         query.orderBy(cb.asc(root.get("studentNumber")), cb.asc(root.get("name")));
-        // --------------------------------------------
-        // 最终将查询条件拼好然后return
         Predicate[] predicates = new Predicate[predicatesList.size()];
         return cb.and(predicatesList.toArray(predicates));
       }

@@ -16,6 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class FileService {
@@ -40,7 +42,10 @@ public class FileService {
   public String storeFile(MultipartFile file) {
     // Normalize file name
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    // 获取当前时间并作为时间戳
+    String timeStamp = simpleDateFormat.format(new Date());
+    fileName = timeStamp + "And" + fileName;
     try {
       // Check if the file's name contains invalid characters
       if (fileName.contains("..")) {

@@ -19,7 +19,7 @@ public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHa
         AjaxResponseBody responseBody = new AjaxResponseBody();
 
         responseBody.setCode(400);
-        responseBody.setMsg("Login Failure!");
+        responseBody.setMessage("Login Failure!");
 
         httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
     }

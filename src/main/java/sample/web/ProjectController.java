@@ -43,7 +43,7 @@ public class ProjectController {
   private UserService userSerivce;
 
   @ApiOperation(value = "获取项目列表", notes = "获取项目列表")
-  @GetMapping(value = "/projects")
+  @GetMapping(value = "/list")
   public List<Project> getProjectList() {
     return projectService.getProjectList();
   }

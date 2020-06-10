@@ -19,7 +19,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
         AjaxResponseBody responseBody = new AjaxResponseBody();
 
         responseBody.setCode(200);
-        responseBody.setMsg("Login Success!");
+        responseBody.setMessage("Login Success!");
 
         httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
     }

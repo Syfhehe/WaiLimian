@@ -33,7 +33,7 @@ public class FileController {
   @Autowired
   private FileService fileService;
 
-  @ApiOperation(value="上传单个文件", notes="上传单个文件")
+  @ApiOperation(value = "上传单个文件", notes = "上传单个文件")
   @PostMapping("/uploadFile")
   public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
     String fileName = fileService.storeFile(file);
@@ -44,14 +44,14 @@ public class FileController {
     return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
   }
 
-  @ApiOperation(value="上传多个文件", notes="上传多个文件")
+  @ApiOperation(value = "上传多个文件", notes = "上传多个文件")
   @PostMapping("/uploadMultipleFiles")
   public List<UploadFileResponse> uploadMultipleFiles(
       @RequestParam("files") MultipartFile[] files) {
     return Arrays.stream(files).map(this::uploadFile).collect(Collectors.toList());
   }
 
-  @ApiOperation(value="下载文件", notes="下载文件")
+  @ApiOperation(value = "下载文件", notes = "下载文件")
   @GetMapping("/downloadFile/{fileName:.+}")
   public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
       HttpServletRequest request) {

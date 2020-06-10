@@ -9,18 +9,10 @@ public class AjaxResponseBody implements Serializable {
   */
   private static final long serialVersionUID = 1L;
   private int code;
-  private String msg;
+  private String message;
   private Object result;
   private String jwtToken;
-
-
-  public String getMsg() {
-    return msg;
-  }
-
-  public void setMsg(String msg) {
-    this.msg = msg;
-  }
+  private Object data;
 
   public Object getResult() {
     return result;
@@ -44,6 +36,22 @@ public class AjaxResponseBody implements Serializable {
 
   public void setCode(int code) {
     this.code = code;
+  }
+
+  public Object getData() {
+    return data;
+  }
+
+  public void setData(Object data) {
+    this.data = data;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
   }
 
 }

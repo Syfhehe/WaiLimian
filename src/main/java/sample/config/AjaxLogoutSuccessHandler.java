@@ -19,7 +19,7 @@ public class AjaxLogoutSuccessHandler implements LogoutSuccessHandler {
         AjaxResponseBody responseBody = new AjaxResponseBody();
 
         responseBody.setCode(100);
-        responseBody.setMsg("Logout Success!");
+        responseBody.setMessage("Logout Success!");
 
         httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
     }

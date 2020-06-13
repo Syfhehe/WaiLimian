@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import exception.NotFoundException;
 import exception.Result;
 import sample.eum.AreaEnum;
+import sample.eum.CityEnum;
 import sample.eum.LaterEnum;
 import sample.eum.PositionEnum;
 import sample.eum.ScopeEnum;
@@ -18,6 +19,7 @@ import sample.eum.ShapeEnum;
 import sample.eum.StyleEnum;
 import sample.eum.VerticalEnum;
 import sample.model.Project;
+import sample.model.ProjectCode;
 import sample.repository.ProjectRepository;
 import sample.util.StringUtils;
 
@@ -44,13 +46,46 @@ public class ProjectService {
     return projectRepository.findAll();
   }
 
-  public Object getProject(Long id) throws NotFoundException {
+  public Project getProject(Long id) throws NotFoundException {
     Project currentInstance = projectRepository.findOne(id);
     if (currentInstance == null) {
       throw new NotFoundException("project " + id + " is not exist!",
           Result.ErrorCode.USER_NOT_FOUND.getCode());
     }
     return projectRepository.findOne(id);
+  }
+
+  public ProjectCode getProjectCode(Long id) throws NotFoundException {
+    Project currentInstance = projectRepository.findOne(id);
+    if (currentInstance == null) {
+      throw new NotFoundException("project " + id + " is not exist!",
+          Result.ErrorCode.USER_NOT_FOUND.getCode());
+    }
+    ProjectCode pCode = new ProjectCode();
+    pCode.setArea(currentInstance.getArea().name());
+    pCode.setCity(currentInstance.getCity().name());
+    pCode.setCompany(currentInstance.getCompany());
+    pCode.setCreator(currentInstance.getCreator());
+    pCode.setDesign(currentInstance.getDesign());
+    pCode.setHeight(currentInstance.getHeight());
+    pCode.setId(currentInstance.getId());
+    pCode.setLater(currentInstance.getLater().name());
+    pCode.setLength(currentInstance.getLength());
+    pCode.setLocation(currentInstance.getLocation());
+    pCode.setName(currentInstance.getName());
+    pCode.setOpenTime(currentInstance.getOpenTime());
+    pCode.setOpUser(currentInstance.getOpUser());
+    pCode.setPictures(currentInstance.getPictures());
+    pCode.setPosition(currentInstance.getPosition().name());
+    pCode.setScope(currentInstance.getScope().name());
+    pCode.setShape(currentInstance.getShape().name());
+    pCode.setStyle(currentInstance.getStyle().name());
+    pCode.setTab(currentInstance.getTab());
+    pCode.setUpdateTime(currentInstance.getUpdateTime());
+    pCode.setVertical(currentInstance.getVertical().name());
+    pCode.setWidth(currentInstance.getWidth());
+
+    return pCode;
   }
 
   public void deleteProject(Long id) {
@@ -67,8 +102,8 @@ public class ProjectService {
   }
 
   public Page<Project> findAllProject(Pageable pageable, String name, PositionEnum position,
-      AreaEnum area, StyleEnum style, ShapeEnum shape, ScopeEnum scope, LaterEnum later,
-      VerticalEnum vertical) {
+      CityEnum city, AreaEnum area, StyleEnum style, ShapeEnum shape, ScopeEnum scope,
+      LaterEnum later, VerticalEnum vertical, Boolean tab) {
     Specification<Project> specification = new Specification<Project>() {
 
       public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -81,6 +116,10 @@ public class ProjectService {
         if (position != null) {
           Predicate positionPredicate = cb.equal(root.get("position"), position);
           predicatesList.add(positionPredicate);
+        }
+        if (city != null) {
+          Predicate cityPredicate = cb.equal(root.get("city"), city);
+          predicatesList.add(cityPredicate);
         }
         if (area != null) {
           Predicate areaPredicate = cb.equal(root.get("area"), area);
@@ -108,7 +147,10 @@ public class ProjectService {
           Predicate verticalPredicate = cb.equal(root.get("vertical"), vertical);
           predicatesList.add(verticalPredicate);
         }
-        query.orderBy(cb.asc(root.get("studentNumber")), cb.asc(root.get("name")));
+        if (tab != null) {
+          Predicate tabPredicate = cb.equal(root.get("tab").as(Boolean.class), tab);
+          predicatesList.add(tabPredicate);
+        }
         Predicate[] predicates = new Predicate[predicatesList.size()];
         return cb.and(predicatesList.toArray(predicates));
       }

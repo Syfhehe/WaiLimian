@@ -3,15 +3,17 @@ package sample.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -23,7 +25,6 @@ import sample.eum.ScopeEnum;
 import sample.eum.ShapeEnum;
 import sample.eum.StyleEnum;
 import sample.eum.VerticalEnum;
-import sample.util.StringListConverter;
 
 @Table(name = "project")
 @Entity
@@ -35,78 +36,79 @@ public class Project {
 
   @NotNull
   private String name;
-  
+
   @Column
   private float areaOfStructure;
-  
+
   @Column
   private String design;
-  
+
   @Column
   private String location;
-  
+
   @Column
   private String company;
-  
+
   @Column
   private float length;
-  
+
   @Column
   private float width;
-  
+
   @Column
   private float height;
-  
+
   @Column
   private Date openTime;
 
   @Column
   @Enumerated(EnumType.STRING)
   private CityEnum city;
-  
+
   @Column
   @Enumerated(EnumType.STRING)
   private PositionEnum position;
-  
+
   @Column
   @Enumerated(EnumType.STRING)
   private AreaEnum area;
-  
+
   @Column
   @Enumerated(EnumType.STRING)
   private StyleEnum style;
-  
+
   @Column
   @Enumerated(EnumType.STRING)
   private ShapeEnum shape;
-  
+
   @Column
   @Enumerated(EnumType.STRING)
   private ScopeEnum scope;
-  
+
   @Column
   @Enumerated(EnumType.STRING)
   private LaterEnum later;
-  
+
   @Column
   @Enumerated(EnumType.STRING)
   private VerticalEnum vertical;
-  
+
   @Column
-  private  Date updateTime;
-  
+  private Date updateTime;
+
   @ManyToOne
   private User opUser;
-  
+
   @ManyToOne
   private User creator;
-  
-  @Convert(converter = StringListConverter.class)
-  private List<String> picPaths;
-  
+
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "projectid")
+  private List<Picture> pictures;
+
   @Column
-  private Boolean tag;
-  
+  private Boolean tab;
+
   public Long getId() {
     return id;
   }
@@ -267,28 +269,28 @@ public class Project {
     this.opUser = opUser;
   }
 
-  public List<String> getPicPaths() {
-    return picPaths;
-  }
-
-  public void setPicPaths(List<String> picPaths) {
-    this.picPaths = picPaths;
-  }
-
-  public Boolean getTag() {
-    return tag;
-  }
-
-  public void setTag(Boolean tag) {
-    this.tag = tag;
-  }
-
   public User getCreator() {
     return creator;
   }
 
   public void setCreator(User creator) {
     this.creator = creator;
+  }
+
+  public Boolean getTab() {
+    return tab;
+  }
+
+  public void setTab(Boolean tab) {
+    this.tab = tab;
+  }
+
+  public List<Picture> getPictures() {
+    return pictures;
+  }
+
+  public void setPictures(List<Picture> pictures) {
+    this.pictures = pictures;
   }
 
 }

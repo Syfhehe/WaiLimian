@@ -3,8 +3,6 @@ package sample.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,12 +12,8 @@ import org.springframework.stereotype.Component;
 import sample.model.User;
 import sample.model.UserWithSalt;
 import sample.repository.UserRepository;
-import sample.service.TestingUserDetailService;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * ② 根据 username 获取数据库 user 信息

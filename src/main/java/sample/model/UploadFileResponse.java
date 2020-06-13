@@ -1,32 +1,27 @@
 package sample.model;
 
 public class UploadFileResponse {
-	private String fileName;
-	private String fileDownloadUri;
+	private String name;
+	private String status = "done"; 
+	private String url;
+	private String thumbUrl;
 	private String fileType;
 	private long size;
 
-	public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
-		this.fileName = fileName;
-		this.fileDownloadUri = fileDownloadUri;
+	public UploadFileResponse(String name, String url, String thumbUrl, String fileType, long size) {
+		this.name = name;
+		this.url = url;
+		this.thumbUrl = thumbUrl;
 		this.fileType = fileType;
 		this.size = size;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public String getFileDownloadUri() {
-		return fileDownloadUri;
-	}
-
-	public void setFileDownloadUri(String fileDownloadUri) {
-		this.fileDownloadUri = fileDownloadUri;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getFileType() {
@@ -44,4 +39,28 @@ public class UploadFileResponse {
 	public void setSize(long size) {
 		this.size = size;
 	}
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public String getThumbUrl() {
+    return thumbUrl;
+  }
+
+  public void setThumbUrl(String thumbUrl) {
+    this.thumbUrl = thumbUrl;
+  }
 }

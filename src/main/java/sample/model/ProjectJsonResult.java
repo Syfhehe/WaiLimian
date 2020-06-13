@@ -1,12 +1,15 @@
 package sample.model;
 
-public class JsonResult<T> {
+public class ProjectJsonResult<T> {
 
   private T data;
   private String code;
-  private String msssage;
+  private String msssage;  
+  private int page_no = 0;
+  private int page_size = 0;
+  private int total = 0;
 
-  public JsonResult() {
+  public ProjectJsonResult() {
     this.code = "200";
     this.msssage = "操作成功！";
   }
@@ -17,7 +20,7 @@ public class JsonResult<T> {
    * @param code
    * @param msssage
    */
-  public JsonResult(String code, String msssage) {
+  public ProjectJsonResult(String code, String msssage) {
     this.code = code;
     this.msssage = msssage;
   }
@@ -27,10 +30,19 @@ public class JsonResult<T> {
    * 
    * @param data
    */
-  public JsonResult(T data) {
+  public ProjectJsonResult(T data) {
     this.data = data;
     this.code = "200";
     this.msssage = "操作成功！";
+  }
+  
+  public ProjectJsonResult(T data, int page_no, int page_size, int total) {
+    this.data = data;
+    this.code = "200";
+    this.msssage = "操作成功！";
+    this.page_no = page_no;
+    this.page_size = page_size;
+    this.total = total;
   }
 
   /**
@@ -39,11 +51,12 @@ public class JsonResult<T> {
    * @param data
    * @param msssage
    */
-  public JsonResult(T data, String msssage) {
+  public ProjectJsonResult(T data, String msssage) {
     this.data = data;
     this.code = "200";
     this.msssage = msssage;
   }
+
 
   public T getData() {
     return data;
@@ -67,6 +80,30 @@ public class JsonResult<T> {
 
   public void setMsssage(String msssage) {
     this.msssage = msssage;
+  }
+
+  public int getPage_no() {
+    return page_no;
+  }
+
+  public void setPage_no(int page_no) {
+    this.page_no = page_no;
+  }
+
+  public int getPage_size() {
+    return page_size;
+  }
+
+  public void setPage_size(int page_size) {
+    this.page_size = page_size;
+  }
+
+  public int getTotal() {
+    return total;
+  }
+
+  public void setTotal(int total) {
+    this.total = total;
   }
 
 

@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.annotations.ApiOperation;
+import sample.model.JsonArrayResult;
+import sample.model.JsonResult;
 import sample.model.UploadFileResponse;
 import sample.repository.UserRepository;
 import sample.service.FileService;
@@ -35,20 +37,35 @@ public class FileController {
 
   @ApiOperation(value = "上传单个文件", notes = "上传单个文件")
   @PostMapping("/uploadFile")
-  public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+  public Object uploadFile(@RequestParam("file") MultipartFile file) {
     String fileName = fileService.storeFile(file);
 
     String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
         .path("/downloadFile/").path(fileName).toUriString();
 
-    return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+    UploadFileResponse updateResponse = new UploadFileResponse(fileName, fileDownloadUri,
+        fileDownloadUri, file.getContentType(), file.getSize());
+
+    return new JsonResult<UploadFileResponse>(updateResponse);
+  }
+
+  public UploadFileResponse uploadFileMethod(@RequestParam("file") MultipartFile file) {
+    String fileName = fileService.storeFile(file);
+
+    String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+        .path("/downloadFile/").path(fileName).toUriString();
+
+    return new UploadFileResponse(fileName, fileDownloadUri, fileDownloadUri, file.getContentType(),
+        file.getSize());
   }
 
   @ApiOperation(value = "上传多个文件", notes = "上传多个文件")
   @PostMapping("/uploadMultipleFiles")
-  public List<UploadFileResponse> uploadMultipleFiles(
+  public JsonArrayResult<UploadFileResponse> uploadMultipleFiles(
       @RequestParam("files") MultipartFile[] files) {
-    return Arrays.stream(files).map(this::uploadFile).collect(Collectors.toList());
+    List<UploadFileResponse> array =
+        Arrays.stream(files).map(this::uploadFileMethod).collect(Collectors.toList());
+    return new JsonArrayResult<UploadFileResponse>(array);
   }
 
   @ApiOperation(value = "下载文件", notes = "下载文件")

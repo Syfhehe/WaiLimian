@@ -1,12 +1,14 @@
 package sample.model;
 
-public class JsonResult<T> {
+import java.util.List;
 
-  private T data;
+public class JsonArrayResult<T> {
+
+  private List<T> data;
   private String code;
   private String msssage;
 
-  public JsonResult() {
+  public JsonArrayResult() {
     this.code = "200";
     this.msssage = "操作成功！";
   }
@@ -17,7 +19,7 @@ public class JsonResult<T> {
    * @param code
    * @param msssage
    */
-  public JsonResult(String code, String msssage) {
+  public JsonArrayResult(String code, String msssage) {
     this.code = code;
     this.msssage = msssage;
   }
@@ -27,7 +29,7 @@ public class JsonResult<T> {
    * 
    * @param data
    */
-  public JsonResult(T data) {
+  public JsonArrayResult(List<T> data) {
     this.data = data;
     this.code = "200";
     this.msssage = "操作成功！";
@@ -39,19 +41,12 @@ public class JsonResult<T> {
    * @param data
    * @param msssage
    */
-  public JsonResult(T data, String msssage) {
+  public JsonArrayResult(List<T> data, String msssage) {
     this.data = data;
     this.code = "200";
     this.msssage = msssage;
   }
 
-  public T getData() {
-    return data;
-  }
-
-  public void setData(T data) {
-    this.data = data;
-  }
 
   public String getCode() {
     return code;
@@ -67,6 +62,14 @@ public class JsonResult<T> {
 
   public void setMsssage(String msssage) {
     this.msssage = msssage;
+  }
+
+  public List<T> getData() {
+    return data;
+  }
+
+  public void setData(List<T> data) {
+    this.data = data;
   }
 
 

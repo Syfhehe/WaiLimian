@@ -14,13 +14,14 @@ import java.io.IOException;
 @Component
 public class AjaxAccessDeniedHandler implements AccessDeniedHandler {
 
-    @Override
-    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        AjaxResponseBody responseBody = new AjaxResponseBody();
+  @Override
+  public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+      AccessDeniedException e) throws IOException, ServletException {
+    AjaxResponseBody responseBody = new AjaxResponseBody();
 
-        responseBody.setCode(300);
-        responseBody.setMessage("Need Authorities!");
+    responseBody.setCode(300);
+    responseBody.setMessage("Need Authorities!");
 
-        httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
-    }
+    httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
+  }
 }

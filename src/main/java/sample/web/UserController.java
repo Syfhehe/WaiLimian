@@ -24,5 +24,5 @@ public class UserController {
     user.setPassword(null);
     return new JsonResult<>(user);
   }
-  
+
 }

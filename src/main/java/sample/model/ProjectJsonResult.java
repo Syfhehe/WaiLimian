@@ -4,7 +4,7 @@ public class ProjectJsonResult<T> {
 
   private T data;
   private String code;
-  private String msssage;  
+  private String msssage;
   private int page_no = 0;
   private int page_size = 0;
   private int total = 0;
@@ -35,7 +35,7 @@ public class ProjectJsonResult<T> {
     this.code = "200";
     this.msssage = "操作成功！";
   }
-  
+
   public ProjectJsonResult(T data, int page_no, int page_size, int total) {
     this.data = data;
     this.code = "200";

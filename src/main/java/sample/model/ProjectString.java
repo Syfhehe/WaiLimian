@@ -3,7 +3,7 @@ package sample.model;
 import java.util.Date;
 import java.util.List;
 
-public class ProjectCode {
+public class ProjectString {
 
   private Long id;
 
@@ -218,7 +218,7 @@ public class ProjectCode {
   public void setCreator(User creator) {
     this.creator = creator;
   }
-  
+
   public Boolean getTab() {
     return tab;
   }
@@ -235,5 +235,5 @@ public class ProjectCode {
     this.pictures = pictures;
   }
 
- 
+
 }

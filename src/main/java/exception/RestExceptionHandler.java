@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class RestExceptionHandler
-{
-    private static Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);
+public class RestExceptionHandler {
+  private static Logger logger = LoggerFactory.getLogger(RestExceptionHandler.class);
 
-    @ExceptionHandler(value = NotFoundException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Result handleResourceNotFoundException(NotFoundException e)
-    {
-        logger.error(e.getMessage(), e);
-        return new Result(e.getMessage(), e.getCode());
-    }
+  @ExceptionHandler(value = NotFoundException.class)
+  @ResponseBody
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public Result handleResourceNotFoundException(NotFoundException e) {
+    logger.error(e.getMessage(), e);
+    return new Result(e.getMessage(), e.getCode());
+  }
 }

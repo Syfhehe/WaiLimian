@@ -9,25 +9,28 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "picture")
 public class Picture implements Serializable {
 
-  private static final long serialVersionUID = 8831737280677584496L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "url", nullable = false)
+  @Column(name = "url")
   private String url;
 
-  @Column(name = "thumb_url", nullable = false)
+  @Column(name = "thumb_url")
   private String thumbUrl;
 
-  @Column(name = "name", nullable = false)
+  @Column(name = "name")
   private String name;
 
-  @Column(name = "uid", nullable = false)
+  @Column(name = "uid")
   private String uid;
 
   public Long getId() {
@@ -70,7 +73,4 @@ public class Picture implements Serializable {
     this.uid = uid;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
 }

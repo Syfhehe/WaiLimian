@@ -14,13 +14,15 @@ import java.io.IOException;
 @Component
 public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        AjaxResponseBody responseBody = new AjaxResponseBody();
+  @Override
+  public void commence(HttpServletRequest httpServletRequest,
+      HttpServletResponse httpServletResponse, AuthenticationException e)
+      throws IOException, ServletException {
+    AjaxResponseBody responseBody = new AjaxResponseBody();
 
-        responseBody.setCode(000);
-        responseBody.setMessage("Need Authorities!");
+    responseBody.setCode(000);
+    responseBody.setMessage("Need Authorities!");
 
-        httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
-    }
+    httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
+  }
 }

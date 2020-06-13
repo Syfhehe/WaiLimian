@@ -14,13 +14,15 @@ import java.io.IOException;
 @Component
 public class AjaxLogoutSuccessHandler implements LogoutSuccessHandler {
 
-    @Override
-    public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        AjaxResponseBody responseBody = new AjaxResponseBody();
+  @Override
+  public void onLogoutSuccess(HttpServletRequest httpServletRequest,
+      HttpServletResponse httpServletResponse, Authentication authentication)
+      throws IOException, ServletException {
+    AjaxResponseBody responseBody = new AjaxResponseBody();
 
-        responseBody.setCode(100);
-        responseBody.setMessage("Logout Success!");
+    responseBody.setCode(100);
+    responseBody.setMessage("Logout Success!");
 
-        httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
-    }
+    httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
+  }
 }

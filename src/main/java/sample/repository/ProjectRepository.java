@@ -11,4 +11,6 @@ import sample.model.Project;
 
 public interface ProjectRepository
     extends JpaRepository<Project, Long>, JpaSpecificationExecutor<Project>, Serializable {
+  
+  
 }

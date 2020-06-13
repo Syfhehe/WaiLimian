@@ -14,13 +14,15 @@ import java.io.IOException;
 @Component
 public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-    @Override
-    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        AjaxResponseBody responseBody = new AjaxResponseBody();
+  @Override
+  public void onAuthenticationFailure(HttpServletRequest httpServletRequest,
+      HttpServletResponse httpServletResponse, AuthenticationException e)
+      throws IOException, ServletException {
+    AjaxResponseBody responseBody = new AjaxResponseBody();
 
-        responseBody.setCode(400);
-        responseBody.setMessage("Login Failure!");
+    responseBody.setCode(400);
+    responseBody.setMessage("Login Failure!");
 
-        httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
-    }
+    httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
+  }
 }

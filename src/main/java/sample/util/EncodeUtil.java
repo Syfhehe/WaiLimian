@@ -28,8 +28,8 @@ public class EncodeUtil {
       password = "";
     }
 
-    if ((strict) && (salt != null) && (
-        (salt.toString().lastIndexOf("{") != -1) || (salt.toString().lastIndexOf("}") != -1))) {
+    if ((strict) && (salt != null)
+        && ((salt.toString().lastIndexOf("{") != -1) || (salt.toString().lastIndexOf("}") != -1))) {
       throw new IllegalArgumentException("Cannot use { or } in salt.toString()");
     }
 

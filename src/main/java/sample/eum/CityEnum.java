@@ -7,7 +7,7 @@ public enum CityEnum {
   private String city;
 
   private CityEnum(String city) {
-      this.city = city;
+    this.city = city;
   }
 
   public String getCity() {

@@ -100,7 +100,7 @@ public class UserService {
     exitedUser.setRole(user.getRole());
     userRepository.save(exitedUser);
   }
-  
+
   @Transactional
   public void updatePassword(String newPassword, User currentUser) {
     logger.debug("Start reseting a user's password.");

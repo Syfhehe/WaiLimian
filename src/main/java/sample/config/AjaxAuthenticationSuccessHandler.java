@@ -14,14 +14,16 @@ import java.io.IOException;
 @Component
 public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        AjaxResponseBody responseBody = new AjaxResponseBody();
+  @Override
+  public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
+      HttpServletResponse httpServletResponse, Authentication authentication)
+      throws IOException, ServletException {
+    AjaxResponseBody responseBody = new AjaxResponseBody();
 
-        responseBody.setCode(200);
-        responseBody.setMessage("Login Success!");
+    responseBody.setCode(200);
+    responseBody.setMessage("Login Success!");
 
-        httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
-    }
+    httpServletResponse.getWriter().write(JSON.toJSONString(responseBody));
+  }
 }
 

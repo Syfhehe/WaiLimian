@@ -14,22 +14,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger2 {
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .protocols(Sets.newHashSet("http"))
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("sample.web"))
-                .paths(PathSelectors.any())
-                .build();
-    }
+  @Bean
+  public Docket createRestApi() {
+    return new Docket(DocumentationType.SWAGGER_2).protocols(Sets.newHashSet("http"))
+        .apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.basePackage("sample.web"))
+        .paths(PathSelectors.any()).build();
+  }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("RESTful Interface")
-                .version("1.0")
-                .description("RESTful API Test")
-                .build();
-    }
+  private ApiInfo apiInfo() {
+    return new ApiInfoBuilder().title("RESTful Interface").version("1.0")
+        .description("RESTful API Test").build();
+  }
 }

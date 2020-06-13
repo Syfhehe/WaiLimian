@@ -65,7 +65,7 @@ public class ProjectController {
       @RequestParam(value = "scope") ScopeEnum scope,
       @RequestParam(value = "later") LaterEnum later,
       @RequestParam(value = "vertical") VerticalEnum vertical,
-      @RequestParam(value = "page_no", defaultValue = "1") Integer page_no,
+      @RequestParam(value = "page_no", defaultValue = "0") Integer page_no,
       @RequestParam(value = "page_size", defaultValue = "12") Integer page_size,
       @RequestParam(value = "tab") Boolean tab) {
     Sort sort = new Sort(Direction.DESC, "id");
@@ -74,14 +74,14 @@ public class ProjectController {
         style, shape, scope, later, vertical, tab);
     int pageNo = projects.getTotalPages();
     int pageSize = projects.getSize();
-    int total = projects.getNumber();
+    int total = (int) projects.getTotalElements();
     return new ProjectJsonResult<>(projects.getContent(), pageNo, pageSize, total);
   }
 
   @ApiOperation(value = "查询项目", notes = "查询项目")
   @GetMapping(value = {"/manage_list"})
   public Object searchProjectsByPage(
-      @RequestParam(value = "page_no", defaultValue = "1") Integer page_no,
+      @RequestParam(value = "page_no", defaultValue = "0") Integer page_no,
       @RequestParam(value = "page_size", defaultValue = "12") Integer page_size) {
     Sort sort = new Sort(Direction.DESC, "id");
     Pageable pageable = new PageRequest(page_no, page_size, sort);
@@ -89,7 +89,7 @@ public class ProjectController {
         null, null, null, null, null);
     int pageNo = projects.getTotalPages();
     int pageSize = projects.getSize();
-    int total = projects.getNumber();
+    int total = (int) projects.getTotalElements();
     return new ProjectJsonResult<>(projects.getContent(), pageNo, pageSize, total);
   }
 

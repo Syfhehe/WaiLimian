@@ -3,6 +3,7 @@ package sample.web;
 import io.swagger.annotations.ApiOperation;
 import sample.model.JsonResult;
 import sample.model.User;
+import sample.model.UserViewObject;
 import sample.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,10 @@ public class UserController {
   @GetMapping(value = "/user_info")
   public Object getUser() throws NotFoundException {
     User user = userService.getCurrentUser();
-    user.setPassword(null);
-    return new JsonResult<>(user);
+    UserViewObject userVo = new UserViewObject();
+    userVo.setId(user.getUserName());
+    userVo.setRole(user.getRole().name());
+    return new JsonResult<>(userVo);
   }
 
 }

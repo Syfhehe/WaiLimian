@@ -2,9 +2,6 @@ package sample.web;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import org.h2.util.New;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,7 +37,7 @@ import sample.service.ProjectService;
 import sample.service.UserService;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("")
 public class ProjectController {
 
   @Autowired

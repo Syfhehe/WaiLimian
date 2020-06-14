@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import sample.eum.AreaEnum;
 import sample.eum.CityEnum;
 import sample.eum.LaterEnum;
@@ -59,6 +61,7 @@ public class Project {
   private float height;
 
   @Column
+  @JsonFormat(pattern = "yyyy-MM-dd")
   private Date openTime;
 
   @Column
@@ -94,6 +97,7 @@ public class Project {
   private VerticalEnum vertical;
 
   @Column
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date updateTime;
 
   @ManyToOne

@@ -41,7 +41,7 @@ public class FileController {
     String fileName = fileService.storeFile(file);
 
     String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/downloadFile/").path(fileName).toUriString();
+        .path("/pictures/").path(fileName).toUriString();
 
     UploadFileResponse updateResponse = new UploadFileResponse(fileName, fileDownloadUri,
         fileDownloadUri, file.getContentType(), file.getSize());
@@ -53,18 +53,20 @@ public class FileController {
     String fileName = fileService.storeFile(file);
 
     String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/downloadFile/").path(fileName).toUriString();
+        .path("/pictures/").path(fileName).toUriString();
+    
+    fileDownloadUri = "http://192.168.0.105:8090/pictures/" + fileName;//待删除
 
     return new UploadFileResponse(fileName, fileDownloadUri, fileDownloadUri, file.getContentType(),
         file.getSize());
   }
 
   @ApiOperation(value = "上传多个文件", notes = "上传多个文件")
-  @PostMapping("/uploadMultipleFiles")
+  @PostMapping("/upload")
   public JsonArrayResult<UploadFileResponse> uploadMultipleFiles(
-      @RequestParam("files") MultipartFile[] files) {
+      @RequestParam("file") MultipartFile[] file) {
     List<UploadFileResponse> array =
-        Arrays.stream(files).map(this::uploadFileMethod).collect(Collectors.toList());
+        Arrays.stream(file).map(this::uploadFileMethod).collect(Collectors.toList());
     return new JsonArrayResult<UploadFileResponse>(array);
   }
 

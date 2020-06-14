@@ -24,4 +24,6 @@ spring.http.multipart.file-size-threshold: 0
 spring.http.multipart.max-file-size: 200MB
 spring.http.multipart.max-request-size: 200MB
 
-file.upload-dir: ./uploads
+file.upload-dir: src/main/resources/static/pictures
+
+spring.mvc.static-path-pattern: /**

@@ -3,11 +3,11 @@ package sample.model;
 public class JsonResult<T> {
 
   private T data;
-  private String code;
+  private int code;
   private String msssage;
 
   public JsonResult() {
-    this.code = "200";
+    this.code = 200;
     this.msssage = "操作成功！";
   }
 
@@ -17,7 +17,7 @@ public class JsonResult<T> {
    * @param code
    * @param msssage
    */
-  public JsonResult(String code, String msssage) {
+  public JsonResult(int code, String msssage) {
     this.code = code;
     this.msssage = msssage;
   }
@@ -29,7 +29,7 @@ public class JsonResult<T> {
    */
   public JsonResult(T data) {
     this.data = data;
-    this.code = "200";
+    this.code = 200;
     this.msssage = "操作成功！";
   }
 
@@ -41,7 +41,7 @@ public class JsonResult<T> {
    */
   public JsonResult(T data, String msssage) {
     this.data = data;
-    this.code = "200";
+    this.code = 200;
     this.msssage = msssage;
   }
 
@@ -53,11 +53,11 @@ public class JsonResult<T> {
     this.data = data;
   }
 
-  public String getCode() {
+  public int getCode() {
     return code;
   }
 
-  public void setCode(String code) {
+  public void setCode(int code) {
     this.code = code;
   }
 

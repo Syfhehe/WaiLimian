@@ -1,6 +1,5 @@
 package sample.model;
 
-import java.util.Date;
 import java.util.List;
 
 public class ProjectString {
@@ -23,7 +22,7 @@ public class ProjectString {
 
   private float height;
 
-  private Date openTime;
+  private String openTime;
 
   private String city;
 
@@ -41,7 +40,7 @@ public class ProjectString {
 
   private String vertical;
 
-  private Date updateTime;
+  private String updateTime;
 
   private User opUser;
 
@@ -123,14 +122,6 @@ public class ProjectString {
     this.height = height;
   }
 
-  public Date getOpenTime() {
-    return openTime;
-  }
-
-  public void setOpenTime(Date openTime) {
-    this.openTime = openTime;
-  }
-
   public String getCity() {
     return city;
   }
@@ -195,14 +186,6 @@ public class ProjectString {
     this.vertical = vertical;
   }
 
-  public Date getUpdateTime() {
-    return updateTime;
-  }
-
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
-  }
-
   public User getOpUser() {
     return opUser;
   }
@@ -233,6 +216,22 @@ public class ProjectString {
 
   public void setPictures(List<Picture> pictures) {
     this.pictures = pictures;
+  }
+
+  public String getOpenTime() {
+    return openTime;
+  }
+
+  public void setOpenTime(String openTime) {
+    this.openTime = openTime;
+  }
+
+  public String getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(String updateTime) {
+    this.updateTime = updateTime;
   }
 
 

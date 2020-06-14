@@ -1,7 +1,12 @@
 package sample.web;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +33,7 @@ import sample.eum.ShapeEnum;
 import sample.eum.StyleEnum;
 import sample.eum.VerticalEnum;
 import sample.model.JsonArrayResult;
+import sample.model.JsonMapResult;
 import sample.model.JsonResult;
 import sample.model.Project;
 import sample.model.ProjectJsonResult;
@@ -35,6 +41,7 @@ import sample.model.ProjectString;
 import sample.model.User;
 import sample.service.ProjectService;
 import sample.service.UserService;
+import sample.util.Util;
 
 @RestController
 @RequestMapping("")
@@ -47,7 +54,7 @@ public class ProjectController {
   private UserService userSerivce;
 
   @ApiOperation(value = "获取项目列表", notes = "获取项目列表")
-  @GetMapping(value = "")
+  @GetMapping(value = "/all")
   public Object getProjectList() {
     return new JsonArrayResult<Project>(projectService.getProjectList());
   }
@@ -55,63 +62,70 @@ public class ProjectController {
   @ApiOperation(value = "查询项目", notes = "查询项目")
   @GetMapping(value = {"/list"})
   public Object searchProjects(@RequestParam(value = "search", defaultValue = "") String search,
-      @RequestParam(value = "city") CityEnum city,
-      @RequestParam(value = "position") PositionEnum position,
-      @RequestParam(value = "area") AreaEnum area, @RequestParam(value = "style") StyleEnum style,
-      @RequestParam(value = "shape") ShapeEnum shape,
-      @RequestParam(value = "scope") ScopeEnum scope,
-      @RequestParam(value = "later") LaterEnum later,
-      @RequestParam(value = "vertical") VerticalEnum vertical,
+      @RequestParam(value = "city", required = false) CityEnum city,
+      @RequestParam(value = "position", required = false) PositionEnum position,
+      @RequestParam(value = "area", required = false) AreaEnum area,
+      @RequestParam(value = "style", required = false) StyleEnum style,
+      @RequestParam(value = "shape", required = false) ShapeEnum shape,
+      @RequestParam(value = "scope", required = false) ScopeEnum scope,
+      @RequestParam(value = "later", required = false) LaterEnum later,
+      @RequestParam(value = "vertical", required = false) VerticalEnum vertical,
       @RequestParam(value = "page_no", defaultValue = "0") Integer page_no,
-      @RequestParam(value = "page_size", defaultValue = "12") Integer page_size,
+      @RequestParam(value = "page_size", defaultValue = "10") Integer page_size,
       @RequestParam(value = "tab") Boolean tab) {
     Sort sort = new Sort(Direction.DESC, "id");
+    if (page_no > 0)
+      page_no = page_no - 1;
     Pageable pageable = new PageRequest(page_no, page_size, sort);
     Page<Project> projects = projectService.findAllProject(pageable, search, position, city, area,
         style, shape, scope, later, vertical, tab);
     int pageNo = projects.getTotalPages();
     int pageSize = projects.getSize();
     int total = (int) projects.getTotalElements();
-    return new ProjectJsonResult<>(projects.getContent(), pageNo, pageSize, total);
+    List<ProjectString> projectsContent = convertEnumToString(projects);
+    return new ProjectJsonResult<>(projectsContent, pageNo, pageSize, total);
   }
 
   @ApiOperation(value = "查询项目", notes = "查询项目")
   @GetMapping(value = {"/manage_list"})
   public Object searchProjectsByPage(
       @RequestParam(value = "page_no", defaultValue = "0") Integer page_no,
-      @RequestParam(value = "page_size", defaultValue = "12") Integer page_size) {
+      @RequestParam(value = "page_size", defaultValue = "10") Integer page_size) {
     Sort sort = new Sort(Direction.DESC, "id");
+    if (page_no > 0)
+      page_no = page_no - 1;
     Pageable pageable = new PageRequest(page_no, page_size, sort);
     Page<Project> projects = projectService.findAllProject(pageable, null, null, null, null, null,
         null, null, null, null, null);
     int pageNo = projects.getTotalPages();
     int pageSize = projects.getSize();
     int total = (int) projects.getTotalElements();
-    return new ProjectJsonResult<>(projects.getContent(), pageNo, pageSize, total);
+    List<ProjectString> projectsContent = convertEnumToString(projects);
+    return new ProjectJsonResult<>(projectsContent, pageNo, pageSize, total);
   }
 
   @ApiOperation(value = "获取项目Code信息", notes = "根据id获取项目信息")
-  @GetMapping(value = "/detail")
-  public Object getProjectDetailCode(@RequestParam("ids") String ids) throws NotFoundException {
-    String[] array = ids.split(",");
-    ArrayList<Project> projectList = new ArrayList<Project>();
-    for (String id : array) {
-      Long idInt = Long.parseLong(id);
-      projectList.add(projectService.getProjectCode(idInt));
+  @GetMapping(value = "/detail_code")
+  public Object getProjectDetailCode(@RequestParam("id") String id) throws NotFoundException {
+    String[] array = id.split(",");
+    Map<String, Project> projectMap = new HashMap<String, Project>();
+    for (String idInArray : array) {
+      Long idInt = Long.parseLong(idInArray);
+      projectMap.put(idInArray, projectService.getProjectCode(idInt));   
     }
-    return new JsonArrayResult<Project>(projectList);
+    return new JsonMapResult<Project>(projectMap);
   }
 
   @ApiOperation(value = "获取项目名称信息", notes = "根据id获取项目信息")
-  @GetMapping(value = "/detail_code")
-  public Object getProjectDetailString(@RequestParam("ids") String ids) throws NotFoundException {
-    String[] array = ids.split(",");
-    ArrayList<ProjectString> projectList = new ArrayList<ProjectString>();
-    for (String id : array) {
-      Long idInt = Long.parseLong(id);
-      projectList.add(projectService.getProjectString(idInt));
+  @GetMapping(value = "/detail")
+  public Object getProjectDetailString(@RequestParam("id") String id) throws NotFoundException {
+    String[] array = id.split(",");  
+    Map<String, ProjectString> projectMap = new HashMap<String, ProjectString>();
+    for (String idInArray : array) {
+      Long idInt = Long.parseLong(idInArray);
+      projectMap.put(idInArray, projectService.getProjectString(idInt));   
     }
-    return new JsonArrayResult<ProjectString>(projectList);
+    return new JsonMapResult<ProjectString>(projectMap);
   }
 
 
@@ -121,12 +135,13 @@ public class ProjectController {
     User user = userSerivce.getCurrentUser();
     project.setOpUser(user);
     project.setCreator(user);
+    project.setUpdateTime(new Date());
     projectService.addProject(project);
     return new JsonResult<Project>();
   }
 
   @ApiOperation(value = "删除项目", notes = "根据id删除项目")
-  @DeleteMapping(value = "/{id}")
+  @DeleteMapping(value = "/delete/{id}")
   public Object deleteProject(@PathVariable("id") Long id) {
     projectService.deleteProject(id);
     return new JsonResult<Project>();
@@ -137,9 +152,42 @@ public class ProjectController {
   public Object updateProject(@RequestBody Project project) {
     User user = userSerivce.getCurrentUser();
     project.setOpUser(user);
-    project.setOpenTime(new Date());
+    project.setUpdateTime(new Date());
     projectService.update(project);
     return new JsonResult<Project>(project);
   }
+
+  private List<ProjectString> convertEnumToString(Page<Project> projects) {
+    List<Project> projectList = projects.getContent();
+    List<ProjectString> projectsContent = new ArrayList<>();
+    for (Project pj : projectList) {
+      ProjectString pCode = new ProjectString();
+      pCode.setArea(pj.getArea().getArea());
+      pCode.setCity(pj.getCity().getCity());
+      pCode.setCompany(pj.getCompany());
+      pCode.setCreator(pj.getCreator());
+      pCode.setDesign(pj.getDesign());
+      pCode.setHeight(pj.getHeight());
+      pCode.setId(pj.getId());
+      pCode.setLater(pj.getLater().getLater());
+      pCode.setLength(pj.getLength());
+      pCode.setLocation(pj.getLocation());
+      pCode.setName(pj.getName());
+      pCode.setOpenTime(Util.formatDate(pj.getOpenTime()));
+      pCode.setOpUser(pj.getOpUser());
+      pCode.setPictures(pj.getPictures());
+      pCode.setPosition(pj.getPosition().getPosition());
+      pCode.setScope(pj.getScope().getScope());
+      pCode.setShape(pj.getShape().getShape());
+      pCode.setStyle(pj.getStyle().getStyle());
+      pCode.setTab(pj.getTab());
+      pCode.setUpdateTime(Util.formatDate(pj.getUpdateTime()));
+      pCode.setVertical(pj.getVertical().getVertical());
+      pCode.setWidth(pj.getWidth());
+      projectsContent.add(pCode);
+    }
+    return projectsContent;
+  }
+
 
 }

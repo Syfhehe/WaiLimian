@@ -3,14 +3,14 @@ package sample.model;
 public class ProjectJsonResult<T> {
 
   private T data;
-  private String code;
+  private int code;
   private String msssage;
   private int page_no = 0;
   private int page_size = 0;
   private int total = 0;
 
   public ProjectJsonResult() {
-    this.code = "200";
+    this.code = 200;
     this.msssage = "操作成功！";
   }
 
@@ -20,7 +20,7 @@ public class ProjectJsonResult<T> {
    * @param code
    * @param msssage
    */
-  public ProjectJsonResult(String code, String msssage) {
+  public ProjectJsonResult(int code, String msssage) {
     this.code = code;
     this.msssage = msssage;
   }
@@ -32,13 +32,13 @@ public class ProjectJsonResult<T> {
    */
   public ProjectJsonResult(T data) {
     this.data = data;
-    this.code = "200";
+    this.code = 200;
     this.msssage = "操作成功！";
   }
 
   public ProjectJsonResult(T data, int page_no, int page_size, int total) {
     this.data = data;
-    this.code = "200";
+    this.code = 200;
     this.msssage = "操作成功！";
     this.page_no = page_no;
     this.page_size = page_size;
@@ -53,7 +53,7 @@ public class ProjectJsonResult<T> {
    */
   public ProjectJsonResult(T data, String msssage) {
     this.data = data;
-    this.code = "200";
+    this.code = 200;
     this.msssage = msssage;
   }
 
@@ -66,11 +66,11 @@ public class ProjectJsonResult<T> {
     this.data = data;
   }
 
-  public String getCode() {
+  public int getCode() {
     return code;
   }
 
-  public void setCode(String code) {
+  public void setCode(int code) {
     this.code = code;
   }
 

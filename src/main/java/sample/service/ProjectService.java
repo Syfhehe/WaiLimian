@@ -22,13 +22,13 @@ import sample.model.Project;
 import sample.model.ProjectString;
 import sample.repository.ProjectRepository;
 import sample.util.StringUtils;
+import sample.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -73,8 +73,8 @@ public class ProjectService {
     pCode.setLater(currentInstance.getLater().getLater());
     pCode.setLength(currentInstance.getLength());
     pCode.setLocation(currentInstance.getLocation());
-    pCode.setName(currentInstance.toString());
-    pCode.setOpenTime(currentInstance.getOpenTime());
+    pCode.setName(currentInstance.getName());
+    pCode.setOpenTime(Util.formatDate(currentInstance.getOpenTime()));
     pCode.setOpUser(currentInstance.getOpUser());
     pCode.setPictures(currentInstance.getPictures());
     pCode.setPosition(currentInstance.getPosition().getPosition());
@@ -82,7 +82,7 @@ public class ProjectService {
     pCode.setShape(currentInstance.getShape().getShape());
     pCode.setStyle(currentInstance.getStyle().getStyle());
     pCode.setTab(currentInstance.getTab());
-    pCode.setUpdateTime(currentInstance.getUpdateTime());
+    pCode.setUpdateTime(Util.formatDate(currentInstance.getUpdateTime()));
     pCode.setVertical(currentInstance.getVertical().getVertical());
     pCode.setWidth(currentInstance.getWidth());
 
@@ -111,51 +111,47 @@ public class ProjectService {
       public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         
         List<Predicate> predicatesList = new ArrayList<>();
+        
         if (StringUtils.isNotBlank(name)) {
-          Predicate namePredicate = cb.equal(root.get("name"), name);
+          Predicate namePredicate = cb.like(root.get("name").as(String.class), "%" + name + "%");
           predicatesList.add(namePredicate);
         }
-        
-//        if (StringUtils.isNotBlank(name)) {
-//          Predicate namePredicate = cb.like(root.get("name").as(String.class), "%" + name + "%");
-//          predicatesList.add(namePredicate);
-//        }
-//        if (position != null) {
-//          Predicate positionPredicate = cb.equal(root.get("position"), position);
-//          predicatesList.add(positionPredicate);
-//        }
-//        if (city != null) {
-//          Predicate cityPredicate = cb.equal(root.get("city"), city);
-//          predicatesList.add(cityPredicate);
-//        }
-//        if (area != null) {
-//          Predicate areaPredicate = cb.equal(root.get("area"), area);
-//          predicatesList.add(areaPredicate);
-//        }
-//        if (style != null) {
-//          Predicate stylePredicate = cb.equal(root.get("style"), style);
-//          predicatesList.add(stylePredicate);
-//        }
-//        if (shape != null) {
-//          Predicate shapePredicate = cb.equal(root.get("shape"), shape);
-//          predicatesList.add(shapePredicate);
-//        }
-//        if (scope != null) {
-//          Predicate scopePredicate = cb.equal(root.get("scope"), scope);
-//          predicatesList.add(scopePredicate);
-//        }
-//        if (later != null) {
-//          Predicate laterPredicate = cb.equal(root.get("later"), later);
-//          predicatesList.add(laterPredicate);
-//        }
-//        if (vertical != null) {
-//          Predicate verticalPredicate = cb.equal(root.get("vertical"), vertical);
-//          predicatesList.add(verticalPredicate);
-//        }
-//        if (tab != null) {
-//          Predicate tabPredicate = cb.equal(root.get("tab").as(Boolean.class), tab);
-//          predicatesList.add(tabPredicate);
-//        }
+        if (position != null) {
+          Predicate positionPredicate = cb.equal(root.get("position"), position);
+          predicatesList.add(positionPredicate);
+        }
+        if (city != null) {
+          Predicate cityPredicate = cb.equal(root.get("city"), city);
+          predicatesList.add(cityPredicate);
+        }
+        if (area != null) {
+          Predicate areaPredicate = cb.equal(root.get("area"), area);
+          predicatesList.add(areaPredicate);
+        }
+        if (style != null) {
+          Predicate stylePredicate = cb.equal(root.get("style"), style);
+          predicatesList.add(stylePredicate);
+        }
+        if (shape != null) {
+          Predicate shapePredicate = cb.equal(root.get("shape"), shape);
+          predicatesList.add(shapePredicate);
+        }
+        if (scope != null) {
+          Predicate scopePredicate = cb.equal(root.get("scope"), scope);
+          predicatesList.add(scopePredicate);
+        }
+        if (later != null) {
+          Predicate laterPredicate = cb.equal(root.get("later"), later);
+          predicatesList.add(laterPredicate);
+        }
+        if (vertical != null) {
+          Predicate verticalPredicate = cb.equal(root.get("vertical"), vertical);
+          predicatesList.add(verticalPredicate);
+        }
+        if (tab != null) {
+          Predicate tabPredicate = cb.equal(root.get("tab").as(Boolean.class), tab);
+          predicatesList.add(tabPredicate);
+        }
         Predicate[] predicates = new Predicate[predicatesList.size()];
         return cb.and(predicatesList.toArray(predicates));
       }

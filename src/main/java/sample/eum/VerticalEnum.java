@@ -18,6 +18,4 @@ public enum VerticalEnum {
     this.vertical = vertical;
   }
 
-
-
 }

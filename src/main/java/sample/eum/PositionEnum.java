@@ -2,7 +2,7 @@ package sample.eum;
 
 public enum PositionEnum {
 
-  CENTRAL_AXIS("中轴"), ALONG_STREET("沿街"), CORNER("转角"), REMOTE("异地"), DIAGONAL("对角");
+  CORE_DISTRICT("核心区"), ENVIRON("近郊"), OUTSKIRTS("远郊区"), TOWN("城乡区");
 
   private PositionEnum(String position) {
     this.position = position;

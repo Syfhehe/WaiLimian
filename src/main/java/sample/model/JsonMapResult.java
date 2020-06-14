@@ -1,14 +1,14 @@
 package sample.model;
 
-import java.util.List;
+import java.util.Map;
 
-public class JsonArrayResult<T> {
+public class JsonMapResult<T> {
 
-  private List<T> data;
+  private Map<String, T> data;
   private int code;
   private String msssage;
 
-  public JsonArrayResult() {
+  public JsonMapResult() {
     this.code = 200;
     this.msssage = "操作成功！";
   }
@@ -19,7 +19,7 @@ public class JsonArrayResult<T> {
    * @param code
    * @param msssage
    */
-  public JsonArrayResult(int code, String msssage) {
+  public JsonMapResult(int code, String msssage) {
     this.code = code;
     this.msssage = msssage;
   }
@@ -29,7 +29,7 @@ public class JsonArrayResult<T> {
    * 
    * @param data
    */
-  public JsonArrayResult(List<T> data) {
+  public JsonMapResult(Map<String, T> data) {
     this.data = data;
     this.code = 200;
     this.msssage = "操作成功！";
@@ -41,7 +41,7 @@ public class JsonArrayResult<T> {
    * @param data
    * @param msssage
    */
-  public JsonArrayResult(List<T> data, String msssage) {
+  public JsonMapResult(Map<String, T> data, String msssage) {
     this.data = data;
     this.code = 200;
     this.msssage = msssage;
@@ -64,11 +64,11 @@ public class JsonArrayResult<T> {
     this.msssage = msssage;
   }
 
-  public List<T> getData() {
+  public Map<String, T> getData() {
     return data;
   }
 
-  public void setData(List<T> data) {
+  public void setData(Map<String, T> data) {
     this.data = data;
   }
 

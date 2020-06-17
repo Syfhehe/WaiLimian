@@ -1,6 +1,5 @@
 package sample.web;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,7 +43,7 @@ import sample.service.UserService;
 import sample.util.Util;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/projects")
 public class ProjectController {
 
   @Autowired
@@ -137,7 +136,7 @@ public class ProjectController {
     project.setCreator(user);
     project.setUpdateTime(new Date());
     projectService.addProject(project);
-    return new JsonResult<Project>();
+    return new JsonResult<Project>(project);
   }
 
   @ApiOperation(value = "删除项目", notes = "根据id删除项目")

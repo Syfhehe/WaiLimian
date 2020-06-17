@@ -20,6 +20,7 @@ import sample.service.FileService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,12 +37,12 @@ public class FileController {
   private FileService fileService;
 
   @ApiOperation(value = "上传单个文件", notes = "上传单个文件")
-  @PostMapping("/uploadFile")
+  @PostMapping("/projects/uploadFile")
   public Object uploadFile(@RequestParam("file") MultipartFile file) {
     String fileName = fileService.storeFile(file);
 
     String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/pictures/").path(fileName).toUriString();
+        .path("/projects/downloadFile/").path(fileName).toUriString();
 
     UploadFileResponse updateResponse = new UploadFileResponse(fileName, fileDownloadUri,
         fileDownloadUri, file.getContentType(), file.getSize());
@@ -53,16 +54,16 @@ public class FileController {
     String fileName = fileService.storeFile(file);
 
     String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/pictures/").path(fileName).toUriString();
-    
-    fileDownloadUri = "http://192.168.0.105:8090/pictures/" + fileName;//待删除
+        .path("/projects/downloadFile/").path(fileName).toUriString();
 
-    return new UploadFileResponse(fileName, fileDownloadUri, fileDownloadUri, file.getContentType(),
+    String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/projects/img/").path(fileName)
+        .toUriString();
+    return new UploadFileResponse(fileName, url, fileDownloadUri, file.getContentType(),
         file.getSize());
   }
 
   @ApiOperation(value = "上传多个文件", notes = "上传多个文件")
-  @PostMapping("/upload")
+  @PostMapping("/projects/upload")
   public JsonArrayResult<UploadFileResponse> uploadMultipleFiles(
       @RequestParam("file") MultipartFile[] file) {
     List<UploadFileResponse> array =
@@ -71,7 +72,7 @@ public class FileController {
   }
 
   @ApiOperation(value = "下载文件", notes = "下载文件")
-  @GetMapping("/downloadFile/{fileName:.+}")
+  @GetMapping("/projects/downloadFile/{fileName:.+}")
   public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
       HttpServletRequest request) {
     // Load file as Resource

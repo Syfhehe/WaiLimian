@@ -63,6 +63,8 @@ public class ProjectService {
           Result.ErrorCode.USER_NOT_FOUND.getCode());
     }
     ProjectString pCode = new ProjectString();
+    pCode.setMaterial(currentInstance.getMaterial());
+    pCode.setAreaOfStructure(currentInstance.getAreaOfStructure());
     pCode.setArea(currentInstance.getArea().getArea());
     pCode.setCity(currentInstance.getCity().getCity());
     pCode.setCompany(currentInstance.getCompany());
@@ -82,10 +84,9 @@ public class ProjectService {
     pCode.setShape(currentInstance.getShape().getShape());
     pCode.setStyle(currentInstance.getStyle().getStyle());
     pCode.setTab(currentInstance.getTab());
-    pCode.setUpdateTime(Util.formatDate(currentInstance.getUpdateTime()));
+    pCode.setUpdateTime(Util.formatDateTime(currentInstance.getUpdateTime()));
     pCode.setVertical(currentInstance.getVertical().getVertical());
     pCode.setWidth(currentInstance.getWidth());
-
     return pCode;
   }
 

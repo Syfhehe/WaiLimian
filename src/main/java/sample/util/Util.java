@@ -17,11 +17,20 @@ public class Util {
         .toArray(String[]::new);
   }
 
-  public static String formatDate(Date date) {
+  public static String formatDateTime(Date date) {
     if(date==null) {
       date = new Date();
     }
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+    String formatStr = formatter.format(date);
+    return formatStr;
+  }
+  
+  public static String formatDate(Date date) {
+    if(date==null) {
+      date = new Date();
+    }
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
     String formatStr = formatter.format(date);
     return formatStr;
   }

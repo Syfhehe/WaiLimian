@@ -52,6 +52,9 @@ public class Project {
   private String company;
 
   @Column
+  private String material;
+  
+  @Column
   private float length;
 
   @Column
@@ -295,6 +298,14 @@ public class Project {
 
   public void setPictures(List<Picture> pictures) {
     this.pictures = pictures;
+  }
+
+  public String getMaterial() {
+    return material;
+  }
+
+  public void setMaterial(String material) {
+    this.material = material;
   }
 
 }

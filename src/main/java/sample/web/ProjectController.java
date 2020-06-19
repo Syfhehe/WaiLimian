@@ -180,13 +180,13 @@ public class ProjectController {
       pCode.setShape(pj.getShape().getShape());
       pCode.setStyle(pj.getStyle().getStyle());
       pCode.setTab(pj.getTab());
-      pCode.setUpdateTime(Util.formatDate(pj.getUpdateTime()));
+      pCode.setUpdateTime(Util.formatDateTime(pj.getUpdateTime()));
       pCode.setVertical(pj.getVertical().getVertical());
       pCode.setWidth(pj.getWidth());
+      pCode.setMaterial(pj.getMaterial());
       projectsContent.add(pCode);
     }
     return projectsContent;
   }
-
 
 }

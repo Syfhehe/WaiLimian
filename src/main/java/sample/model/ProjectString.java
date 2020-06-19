@@ -26,6 +26,8 @@ public class ProjectString {
 
   private String city;
 
+  private String material;
+  
   private String position;
 
   private String area;
@@ -232,6 +234,14 @@ public class ProjectString {
 
   public void setUpdateTime(String updateTime) {
     this.updateTime = updateTime;
+  }
+
+  public String getMaterial() {
+    return material;
+  }
+
+  public void setMaterial(String material) {
+    this.material = material;
   }
 
 

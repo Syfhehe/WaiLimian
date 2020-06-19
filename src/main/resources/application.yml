@@ -23,8 +23,8 @@ spring.jpa.database-platform: org.hibernate.dialect.MySQL5Dialect
 # spring.datasource.platform: h2
 
 spring.jpa.show-sql: true
-# spring.jpa.hibernate.ddl-auto: none
-spring.jpa.hibernate.ddl-auto: create-drop
+spring.jpa.hibernate.ddl-auto: none
+# spring.jpa.hibernate.ddl-auto: create-drop
 # spring.jpa.hibernate.ddl-auto: update
 
 spring.http.multipart.enabled: true

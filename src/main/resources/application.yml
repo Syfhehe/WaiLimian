@@ -38,3 +38,7 @@ spring.mvc.static-path-pattern: /projects/img/**
 file.upload-dir: /var/tmp/img/
 # file.upload-dir: C:/img/
 spring.resources.static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/,file:${file.upload-dir},file:/static/
+
+pdfExport:
+  fontSimsun: static/fonts/simsun.ttc
+  employeeKpiFtl: templates/pdf_export.ftl

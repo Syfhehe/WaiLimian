@@ -21,10 +21,10 @@ public class Picture implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "url")
+  @Column(name = "url", length = 2000)
   private String url;
 
-  @Column(name = "thumb_url")
+  @Column(name = "thumb_url", length = 2000)
   private String thumbUrl;
 
   @Column(name = "name")

@@ -47,6 +47,10 @@ public class ProjectService {
     return projectRepository.findAll();
   }
 
+  public Project getProjectById(Long id) {
+    return projectRepository.findOne(id);
+  }
+
   public Project getProjectCode(Long id) throws NotFoundException {
     Project currentInstance = projectRepository.findOne(id);
     if (currentInstance == null) {
@@ -62,6 +66,10 @@ public class ProjectService {
       throw new NotFoundException("project " + id + " is not exist!",
           Result.ErrorCode.USER_NOT_FOUND.getCode());
     }
+    return projectToString(currentInstance);
+  }
+
+  public ProjectString projectToString(Project currentInstance) {
     ProjectString pCode = new ProjectString();
     pCode.setMaterial(currentInstance.getMaterial());
     pCode.setAreaOfStructure(currentInstance.getAreaOfStructure());
@@ -104,15 +112,55 @@ public class ProjectService {
   }
 
 
+  public List<Project> findSimilarProject(Project project) {
+    List<Project> allProjects = projectRepository.findAll();
+    List<Project> resultProjects = new ArrayList<Project>();
+    int i;
+    for (Project prj : allProjects) {
+      if (project.getTab() != null && project.getTab().equals(prj.getTab())
+          && !project.getId().equals(prj.getId())) {
+        i = 0;
+        if (project.getPosition() != null && project.getPosition().equals(prj.getPosition())) {
+          i++;
+        }
+        if (project.getCity() != null && project.getCity().equals(prj.getCity())) {
+          i++;
+        }
+        if (project.getArea() != null && project.getArea().equals(prj.getArea())) {
+          i++;
+        }
+        if (project.getStyle() != null && project.getStyle().equals(prj.getStyle())) {
+          i++;
+        }
+        if (project.getShape() != null && project.getShape().equals(prj.getShape())) {
+          i++;
+        }
+        if (project.getScope() != null && project.getScope().equals(prj.getScope())) {
+          i++;
+        }
+        if (project.getLater() != null && project.getLater().equals(prj.getLater())) {
+          i++;
+        }
+        if (project.getVertical() != null && project.getVertical().equals(prj.getVertical())) {
+          i++;
+        }
+        if (i >= 6) {
+          resultProjects.add(prj);
+        }
+      }
+    }
+    return resultProjects;
+  }
+
   public Page<Project> findAllProject(Pageable pageable, String name, PositionEnum position,
       CityEnum city, AreaEnum area, StyleEnum style, ShapeEnum shape, ScopeEnum scope,
       LaterEnum later, VerticalEnum vertical, Boolean tab) {
     Specification<Project> specification = new Specification<Project>() {
       @Override
       public Predicate toPredicate(Root<Project> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-        
+
         List<Predicate> predicatesList = new ArrayList<>();
-        
+
         if (StringUtils.isNotBlank(name)) {
           Predicate namePredicate = cb.like(root.get("name").as(String.class), "%" + name + "%");
           predicatesList.add(namePredicate);

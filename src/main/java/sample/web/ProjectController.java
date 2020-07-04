@@ -40,7 +40,6 @@ import sample.model.ProjectString;
 import sample.model.User;
 import sample.service.ProjectService;
 import sample.service.UserService;
-import sample.util.Util;
 
 @RestController
 @RequestMapping("/projects")
@@ -110,7 +109,7 @@ public class ProjectController {
     Map<String, Project> projectMap = new HashMap<String, Project>();
     for (String idInArray : array) {
       Long idInt = Long.parseLong(idInArray);
-      projectMap.put(idInArray, projectService.getProjectCode(idInt));   
+      projectMap.put(idInArray, projectService.getProjectCode(idInt));
     }
     return new JsonMapResult<Project>(projectMap);
   }
@@ -118,11 +117,25 @@ public class ProjectController {
   @ApiOperation(value = "获取项目名称信息", notes = "根据id获取项目信息")
   @GetMapping(value = "/detail")
   public Object getProjectDetailString(@RequestParam("id") String id) throws NotFoundException {
-    String[] array = id.split(",");  
+    Map<String, Object> projectMap = new HashMap<String, Object>();
+    Long idLong = Long.parseLong(id);
+    projectMap.put(id, projectService.getProjectString(idLong));
+
+    List<Project> similarProjects =
+        projectService.findSimilarProject(projectService.getProjectById(idLong));
+    List<ProjectString> similarProjectStrings = convertEnumToString(similarProjects);
+    projectMap.put("recommand", similarProjectStrings);
+    return new JsonMapResult<Object>(projectMap);
+  }
+
+  @ApiOperation(value = "获取项目名称信息", notes = "根据id获取项目信息")
+  @GetMapping(value = "/details")
+  public Object getProjectsDetailString(@RequestParam("id") String id) throws NotFoundException {
+    String[] array = id.split(",");
     Map<String, ProjectString> projectMap = new HashMap<String, ProjectString>();
     for (String idInArray : array) {
       Long idInt = Long.parseLong(idInArray);
-      projectMap.put(idInArray, projectService.getProjectString(idInt));   
+      projectMap.put(idInArray, projectService.getProjectString(idInt));
     }
     return new JsonMapResult<ProjectString>(projectMap);
   }
@@ -160,30 +173,16 @@ public class ProjectController {
     List<Project> projectList = projects.getContent();
     List<ProjectString> projectsContent = new ArrayList<>();
     for (Project pj : projectList) {
-      ProjectString pCode = new ProjectString();
-      pCode.setArea(pj.getArea().getArea());
-      pCode.setCity(pj.getCity().getCity());
-      pCode.setCompany(pj.getCompany());
-      pCode.setCreator(pj.getCreator());
-      pCode.setDesign(pj.getDesign());
-      pCode.setHeight(pj.getHeight());
-      pCode.setId(pj.getId());
-      pCode.setLater(pj.getLater().getLater());
-      pCode.setLength(pj.getLength());
-      pCode.setLocation(pj.getLocation());
-      pCode.setName(pj.getName());
-      pCode.setOpenTime(Util.formatDate(pj.getOpenTime()));
-      pCode.setOpUser(pj.getOpUser());
-      pCode.setPictures(pj.getPictures());
-      pCode.setPosition(pj.getPosition().getPosition());
-      pCode.setScope(pj.getScope().getScope());
-      pCode.setShape(pj.getShape().getShape());
-      pCode.setStyle(pj.getStyle().getStyle());
-      pCode.setTab(pj.getTab());
-      pCode.setUpdateTime(Util.formatDateTime(pj.getUpdateTime()));
-      pCode.setVertical(pj.getVertical().getVertical());
-      pCode.setWidth(pj.getWidth());
-      pCode.setMaterial(pj.getMaterial());
+      ProjectString pCode = projectService.projectToString(pj);
+      projectsContent.add(pCode);
+    }
+    return projectsContent;
+  }
+
+  private List<ProjectString> convertEnumToString(List<Project> projects) {
+    List<ProjectString> projectsContent = new ArrayList<>();
+    for (Project pj : projects) {
+      ProjectString pCode = projectService.projectToString(pj);
       projectsContent.add(pCode);
     }
     return projectsContent;

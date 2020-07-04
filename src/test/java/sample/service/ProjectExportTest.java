@@ -9,9 +9,6 @@ import sample.model.ProjectString;
 public class ProjectExportTest {
   
   @Autowired
-  private ProjectService projectService;
-  
-  @Autowired
   private ProjectExport projectExport;
   
   @Test

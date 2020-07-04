@@ -101,7 +101,6 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>${freemarker.version}</version>
 		</dependency>
 		<!-- 渲染 css 样式 -->
 		<dependency>

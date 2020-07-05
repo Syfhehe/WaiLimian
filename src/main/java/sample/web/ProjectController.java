@@ -119,12 +119,12 @@ public class ProjectController {
   public Object getProjectDetailString(@RequestParam("id") String id) throws NotFoundException {
     Map<String, Object> projectMap = new HashMap<String, Object>();
     Long idLong = Long.parseLong(id);
-    projectMap.put(id, projectService.getProjectString(idLong));
-
+    ProjectString p = projectService.getProjectString(idLong);
     List<Project> similarProjects =
         projectService.findSimilarProject(projectService.getProjectById(idLong));
     List<ProjectString> similarProjectStrings = convertEnumToString(similarProjects);
-    projectMap.put("recommand", similarProjectStrings);
+    p.setRecommand(similarProjectStrings);
+    projectMap.put(id, p);
     return new JsonMapResult<Object>(projectMap);
   }
 

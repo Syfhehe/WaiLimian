@@ -51,6 +51,8 @@ public class ProjectString {
   private List<Picture> pictures;
 
   private Boolean tab;
+  
+  private List<ProjectString> recommand;
 
   public Long getId() {
     return id;
@@ -242,6 +244,14 @@ public class ProjectString {
 
   public void setMaterial(String material) {
     this.material = material;
+  }
+
+  public List<ProjectString> getRecommand() {
+    return recommand;
+  }
+
+  public void setRecommand(List<ProjectString> recommand) {
+    this.recommand = recommand;
   }
 
 

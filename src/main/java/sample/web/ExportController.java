@@ -1,26 +1,27 @@
 package sample.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.annotations.ApiOperation;
+import sample.model.JsonArrayResult;
+import sample.model.PdfModel;
 import sample.model.ProjectString;
-import sample.service.ProjectExport;
+import sample.service.ProjectExportService;
 import sample.service.ProjectService;
 
 @RestController
 public class ExportController {
 
   @Autowired
-  private ProjectExport projectExport;
-  
+  private ProjectExportService projectExport;
+
   @Autowired
   private ProjectService projectService;
 
@@ -29,23 +30,27 @@ public class ExportController {
    * http://${apiAddress}/api/demo/common/export?key1=${key}&key2=${key2}
    */
 
-  @RequestMapping(value = "/projects/export", method = {RequestMethod.POST, RequestMethod.GET},
-      produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @GetMapping(value = "/projects/export")
   @ApiOperation(value = "导出PDF", notes = "导出PDF")
-  public ResponseEntity<?> export(@RequestParam("id") Long id) {
-    try {
-      ProjectString pString = projectService.getProjectString(id);
-      ResponseEntity<?> responseEntity = projectExport.export(pString);
-      return responseEntity;
-    } catch (Exception e) {
-      e.printStackTrace();
+  public Object export(@RequestParam("id") String id) {
+    String[] array = id.split(",");
+    List<PdfModel> pdfModels = new ArrayList<PdfModel>();
+    for (String idInArray : array) {
+      Long idLong = Long.parseLong(idInArray);
+      try {
+        PdfModel pm = new PdfModel();
+        ProjectString pString = projectService.getProjectString(idLong);
+        String fileName = projectExport.export(pString);
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/projects/img/pdf/").path(fileName)
+            .toUriString();
+        pm.setFileName(fileName);
+        pm.setFileDownloadUri(url);
+        pdfModels.add(pm);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-    return new ResponseEntity<String>("{ \"code\" : \"404\", \"message\" : \"not found\" }",
-        headers, HttpStatus.NOT_FOUND);
+    return new JsonArrayResult<PdfModel>(pdfModels);
   }
-
 }
 

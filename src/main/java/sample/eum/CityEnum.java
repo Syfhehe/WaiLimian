@@ -2,7 +2,7 @@ package sample.eum;
 
 public enum CityEnum {
 
-  FIRST_TIER("一线"), SECOND_TIER("二线"), THIRD_FOURTH_TIER("三四线");
+  FIRST_TIER("一线"), SECOND_TIER("二线"), THIRD_FOURTH_TIER("三四线"), OTHERS("其他");
 
   private String city;
 

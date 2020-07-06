@@ -36,12 +36,12 @@ public class FileController {
   private FileService fileService;
 
   @ApiOperation(value = "上传单个文件", notes = "上传单个文件")
-  @PostMapping("/projects/uploadFile")
+  @PostMapping("/uploadFile")
   public Object uploadFile(@RequestParam("file") MultipartFile file) {
     String fileName = fileService.storeFile(file);
 
     String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/projects/downloadFile/").path(fileName).toUriString();
+        .path("/downloadFile/").path(fileName).toUriString();
 
     UploadFileResponse updateResponse = new UploadFileResponse(fileName, fileDownloadUri,
         fileDownloadUri, file.getContentType(), file.getSize());
@@ -53,16 +53,16 @@ public class FileController {
     String fileName = fileService.storeFile(file);
 
     String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/projects/downloadFile/").path(fileName).toUriString();
+        .path("/downloadFile/").path(fileName).toUriString();
 
-    String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/projects/img/").path(fileName)
+    String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
         .toUriString();
     return new UploadFileResponse(fileName, url, fileDownloadUri, file.getContentType(),
         file.getSize());
   }
 
   @ApiOperation(value = "上传多个文件", notes = "上传多个文件")
-  @PostMapping("/projects/upload")
+  @PostMapping("/upload")
   public JsonArrayResult<UploadFileResponse> uploadMultipleFiles(
       @RequestParam("file") MultipartFile[] file) {
     List<UploadFileResponse> array =
@@ -71,7 +71,7 @@ public class FileController {
   }
 
   @ApiOperation(value = "下载文件", notes = "下载文件")
-  @GetMapping("/projects/downloadFile/{fileName:.+}")
+  @GetMapping("/downloadFile/{fileName:.+}")
   public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
       HttpServletRequest request) {
     // Load file as Resource

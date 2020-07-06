@@ -30,7 +30,7 @@ public class ExportController {
    * http://${apiAddress}/api/demo/common/export?key1=${key}&key2=${key2}
    */
 
-  @GetMapping(value = "/projects/export")
+  @GetMapping(value = "/export")
   @ApiOperation(value = "导出PDF", notes = "导出PDF")
   public Object export(@RequestParam("id") String id) {
     String[] array = id.split(",");
@@ -41,7 +41,7 @@ public class ExportController {
         PdfModel pm = new PdfModel();
         ProjectString pString = projectService.getProjectString(idLong);
         String fileName = projectExport.export(pString);
-        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/projects/img/pdf/").path(fileName)
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/pdf/").path(fileName)
             .toUriString();
         pm.setFileName(fileName);
         pm.setFileDownloadUri(url);

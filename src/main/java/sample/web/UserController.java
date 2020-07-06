@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import exception.NotFoundException;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("")
 public class UserController {
   @Autowired
   private UserService userService;

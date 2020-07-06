@@ -42,7 +42,7 @@ import sample.service.ProjectService;
 import sample.service.UserService;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("")
 public class ProjectController {
 
   @Autowired

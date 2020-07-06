@@ -44,24 +44,24 @@ public class SpringSecurityConf extends WebSecurityConfigurerAdapter {
         .and().authorizeRequests().anyRequest().authenticated()// 其他 url 需要身份认证
 
         .and().formLogin() // 开启登录
-        .loginPage("/projects/login").successHandler(authenticationSuccessHandler) // 登录成功
+        .loginPage("/login").successHandler(authenticationSuccessHandler) // 登录成功
         .failureHandler(authenticationFailureHandler) // 登录失败
         .permitAll()
 
-        .and().logout().logoutUrl("/projects/logout").logoutSuccessHandler(logoutSuccessHandler)
+        .and().logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler)
         .permitAll();
 
     http.exceptionHandling().accessDeniedHandler(accessDeniedHandler); // 无权访问 JSON 格式的数据
 
     http.sessionManagement()// Session管理器
-        .maximumSessions(1).expiredUrl("/projects/login");
+        .maximumSessions(1).expiredUrl("/login");
     
   }
 
   @Override
   public void configure(WebSecurity web) throws Exception {
     // 解决静态资源被拦截的问题
-    web.ignoring().antMatchers("/projects/img/**");
+    web.ignoring().antMatchers("/img/**");
   }
 
 }

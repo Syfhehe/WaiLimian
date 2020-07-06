@@ -2,7 +2,7 @@ package sample.eum;
 
 public enum ScopeEnum {
 
-  SMALL("<800㎡"), MIDDLE("800-1500㎡"), BIG(">1500㎡");
+  SMALL("<800㎡"), MIDDLE("800-1500㎡"), BIG(">1500㎡"), OTHERS("其他");
 
   private ScopeEnum(String scope) {
     this.scope = scope;

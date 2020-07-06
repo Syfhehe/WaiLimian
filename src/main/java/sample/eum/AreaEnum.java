@@ -2,7 +2,7 @@ package sample.eum;
 
 public enum AreaEnum {
 
-  CENTRAL_AXIS("中轴"), ALONG_STREET("沿街"), CORNER("转角"), REMOTE("异地"), DIAGONAL("对角");
+  CENTRAL_AXIS("中轴"), ALONG_STREET("沿街"), CORNER("转角"), REMOTE("异地"), DIAGONAL("对角"), OTHERS("其他");
 
   private String area;
 

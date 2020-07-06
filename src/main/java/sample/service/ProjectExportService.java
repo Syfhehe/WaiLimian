@@ -36,7 +36,7 @@ public class ProjectExportService {
   @Autowired
   public ProjectExportService(FileProperties fileProperties) {
     this.fileStorageLocation =
-        Paths.get(fileProperties.getPdfDir()).toAbsolutePath().normalize();
+        Paths.get(fileProperties.getUploadDir()).toAbsolutePath().normalize();
     try {
       Files.createDirectories(this.fileStorageLocation);
     } catch (Exception ex) {

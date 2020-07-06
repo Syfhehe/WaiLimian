@@ -48,20 +48,18 @@ public class SpringSecurityConf extends WebSecurityConfigurerAdapter {
         .failureHandler(authenticationFailureHandler) // 登录失败
         .permitAll()
 
-        .and().logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler)
-        .permitAll();
+        .and().logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler).permitAll();
 
     http.exceptionHandling().accessDeniedHandler(accessDeniedHandler); // 无权访问 JSON 格式的数据
 
     http.sessionManagement()// Session管理器
         .maximumSessions(1).expiredUrl("/login");
-    
+
   }
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    // 解决静态资源被拦截的问题
-    web.ignoring().antMatchers("/img/**");
+    web.ignoring().antMatchers("/projects/img/**", "/img/**");
   }
 
 }

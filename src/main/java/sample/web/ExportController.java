@@ -41,7 +41,7 @@ public class ExportController {
         PdfModel pm = new PdfModel();
         ProjectString pString = projectService.getProjectString(idLong);
         String fileName = projectExport.export(pString);
-        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/pdf/").path(fileName)
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
             .toUriString();
         pm.setFileName(fileName);
         pm.setFileDownloadUri(url);

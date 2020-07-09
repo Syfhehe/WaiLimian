@@ -207,21 +207,15 @@
                 <td class="value" style="width: 10%;">
                 </td>
             </tr>
-
-             <#if prjProject.pictures?exists>
-                <#list prjProject.pictures as picture>
-                <tr>
-                     <td class="title" colspan="1">
-                       <p>${picture.name}</p>
-                    </td>
-                     <td class="title" colspan="9">
-                        <img src="${picture.url}" width="700" onload="if(this.height >= 500){this.height = 500}"/>
-                     </td>
-                </tr>
-                </#list>
-            </#if>
         </table>
 
+        <div>
+            <#if prjProject.pictures?exists>
+                <#list prjProject.pictures as picture>
+                    <img src="${picture.url}" width="800" />
+                </#list>
+            </#if>
+        </div>
     </body>
 
 </html>

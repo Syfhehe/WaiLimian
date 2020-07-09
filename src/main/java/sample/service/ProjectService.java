@@ -88,7 +88,7 @@ public class ProjectService {
     pCode.setOpUser(currentInstance.getOpUser());
     pCode.setPictures(currentInstance.getPictures());
     pCode.setPosition(currentInstance.getPosition().getPosition());
-    pCode.setScope(currentInstance.getScope().getScope().replace("<", "&lt;").replace(">", "&gt;"));
+    pCode.setScope(currentInstance.getScope().getScope());
     pCode.setShape(currentInstance.getShape().getShape());
     pCode.setStyle(currentInstance.getStyle().getStyle());
     pCode.setTab(currentInstance.getTab());

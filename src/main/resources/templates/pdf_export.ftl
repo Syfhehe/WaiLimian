@@ -12,6 +12,11 @@
             relative; } tr.title{ font-weight: bold; } td.title{ height: 50px; font-weight:
             bold; } td.value{ color: blue; } td.content{ font-size: 12px; text-align:
             left; } td.sign{ text-align: left; height: 40px; }
+            img{
+                width: 900px;
+                height: 700px;
+                object-fit: contain;
+            }
         </style>
     </head>
     
@@ -212,7 +217,7 @@
         <div>
             <#if prjProject.pictures?exists>
                 <#list prjProject.pictures as picture>
-                    <img src="${picture.url}" width="800" />
+                    <img src="${picture.url}" />
                 </#list>
             </#if>
         </div>

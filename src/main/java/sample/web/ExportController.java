@@ -40,6 +40,7 @@ public class ExportController {
       try {
         PdfModel pm = new PdfModel();
         ProjectString pString = projectService.getProjectString(idLong);
+        pString.setScope(pString.getScope().replace("<", "&lt;").replace(">", "&gt;"));
         String fileName = projectExport.export(pString);
         String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
             .toUriString();

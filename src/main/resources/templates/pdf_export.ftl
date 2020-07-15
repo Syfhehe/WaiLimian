@@ -124,7 +124,7 @@
                 <td style="width: 10%;">
                     城市
                 </td>
-                <td class="value" style="width: 10%;">
+                <td class="value" style="width: 15%;">
                     <#if prjProject??>
                         <#if prjProject.city??>
                             ${prjProject.city}
@@ -134,7 +134,7 @@
                 <td style="width: 10%;">
                     位置
                 </td>
-                <td class="value" style="width: 10%;">
+                <td class="value" style="width: 15%;">
                     <#if prjProject??>
                         <#if prjProject.area??>
                             ${prjProject.area}
@@ -144,7 +144,7 @@
                 <td style="width: 10%;">
                     风格
                 </td>
-                <td class="value" style="width: 10%;">
+                <td class="value" style="width: 15%;">
                     <#if prjProject??>
                         <#if prjProject.style??>
                             ${prjProject.style}
@@ -154,23 +154,20 @@
                 <td style="width: 10%;">
                     后期
                 </td>
-                <td class="value" style="width: 10%;">
+                <td class="value" style="width: 15%;">
                     <#if prjProject??>
                         <#if prjProject.later??>
                             ${prjProject.later}
                         </#if>
                     </#if>
                 </td>
-                <td style="width: 10%;">
-                </td>
-                <td class="value" style="width: 10%;">
-                </td>
+               
             </tr>
             <tr>
                 <td style="width: 10%;">
                     区位
                 </td>
-                <td class="value" style="width: 10%;">
+                <td class="value" style="width: 15%;">
                     <#if prjProject??>
                         <#if prjProject.position??>
                             ${prjProject.position}
@@ -180,7 +177,7 @@
                 <td style="width: 10%;">
                     形体
                 </td>
-                <td class="value" style="width: 10%;">
+                <td class="value" style="width: 15%;">
                     <#if prjProject??>
                         <#if prjProject.shape??>
                             ${prjProject.shape}
@@ -190,7 +187,7 @@
                 <td style="width: 10%;">
                     规模
                 </td>
-                <td class="value" style="width: 10%;">
+                <td class="value" style="width: 15%;">
                     <#if prjProject??>
                         <#if prjProject.scope??>
                             ${prjProject.scope}
@@ -200,17 +197,13 @@
                 <td style="width: 10%;">
                     竖向
                 </td>
-                <td class="value" style="width: 10%;">
+                <td class="value" style="width: 15%;">
                     <#if prjProject??>
                         <#if prjProject.vertical??>
                             ${prjProject.vertical}
                         </#if>
                     </#if>
-                </td>
-                <td style="width: 10%;">
-                </td>
-                <td class="value" style="width: 10%;">
-                </td>
+                </td>               
             </tr>
         </table>
 

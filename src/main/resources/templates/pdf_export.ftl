@@ -12,11 +12,12 @@
             relative; } tr.title{ font-weight: bold; } td.title{ height: 50px; font-weight:
             bold; } td.value{ color: blue; } td.content{ font-size: 12px; text-align:
             left; } td.sign{ text-align: left; height: 40px; }
-            img{
-                width: 900px;
-                height: 700px;
-                object-fit: contain;
-            }
+            img{ 
+                width: auto; 
+                height: auto; 
+                max-width: 900px; 
+                max-height: 700px; 
+            } 
         </style>
     </head>
     
@@ -206,11 +207,13 @@
                 </td>               
             </tr>
         </table>
-
+ 		<p style="page-break-after: always;"></p>
+ 		
         <div>
             <#if prjProject.pictures?exists>
                 <#list prjProject.pictures as picture>
                     <img src="${picture.url}" />
+                     <p style="page-break-after: always;"></p>
                 </#list>
             </#if>
         </div>

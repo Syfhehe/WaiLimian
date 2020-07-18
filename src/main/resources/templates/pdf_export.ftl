@@ -6,16 +6,57 @@
             Title
         </title>
         <style>
-            @page { size: 279mm 216mm; } table{ margin: auto; border: 1px solid #333;
-            border-bottom: none; border-left: none; font-family: SimSun; } td{ height:
-            30px; border: 1px solid #333; border-top: none; text-align: center; position:
-            relative; } tr.title{ font-weight: bold; } td.title{ height: 50px; font-weight:
-            bold; } td.value{ color: blue; } td.content{ font-size: 12px; text-align:
-            left; } td.sign{ text-align: left; height: 40px; }
-            .box { width: 850px; height: 650px; margin: 10px 0 20px; background-color: #beceeb; overflow: hidden; resize: both; }
-            .box > img { 
-                width: 100%; height: 100%; background-color: #cd0000; object-fit: contain;
-            } 
+        @page {
+            size: 279mm 216mm;
+        }
+
+        @media print {
+            img {
+                page-break-inside: avoid;
+            }
+        }
+
+        table {
+            margin: auto;
+            border: 1px solid #333;
+            border-bottom: none;
+            border-left: none;
+            font-family: SimSun;
+        }
+
+        td {
+            height: 30px;
+            border: 1px solid #333;
+            border-top: none;
+            text-align: center;
+            position: relative;
+        }
+
+        tr.title {
+            font-weight: bold;
+        }
+
+        td.title {
+            height: 50px;
+            font-weight: bold;
+        }
+
+        td.value {
+            color: blue;
+        }
+
+        td.content {
+            font-size: 12px;
+            text-align: left;
+        }
+
+        td.sign {
+            text-align: left;
+            height: 40px;
+        }
+        img{
+            object-fit: contain;
+        }
         </style>
     </head>
     
@@ -205,15 +246,14 @@
                 </td>               
             </tr>
         </table>
- 		<p style="page-break-after: always;">&amp;nbsp;</p>
- 		
+        <span style="page-break-after:always;"></span> 		
         <div>
             <#if prjProject.pictures?exists>
                 <#list prjProject.pictures as picture>
                  	<div class="box">
-                    	<img src="${picture.url}" />
+                    	<img src="${picture.url}" style="${picture.thumbUrl}" />
                      </div>
-                     <p style="page-break-after: always;">&amp;nbsp;</p>
+                    <span style="page-break-after:always;"></span>                
                 </#list>
             </#if>
         </div>

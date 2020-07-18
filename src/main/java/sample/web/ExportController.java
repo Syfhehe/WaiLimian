@@ -1,7 +1,13 @@
 package sample.web;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.swagger.annotations.ApiOperation;
 import sample.model.JsonArrayResult;
 import sample.model.PdfModel;
+import sample.model.Picture;
 import sample.model.ProjectString;
 import sample.service.ProjectExportService;
 import sample.service.ProjectService;
@@ -41,9 +48,32 @@ public class ExportController {
         PdfModel pm = new PdfModel();
         ProjectString pString = projectService.getProjectString(idLong);
         pString.setScope(pString.getScope().replace("<", "&lt;").replace(">", "&gt;"));
+        if (pString.getOpenTime().startsWith("1970")) {
+          pString.setOpenTime("未知");
+        }
+        Iterator<Picture> iter = pString.getPictures().iterator();
+        while (iter.hasNext()) {
+          Picture temp = iter.next();
+          BufferedImage sourceImg = null;
+          try {
+            sourceImg = ImageIO.read(new URL(temp.getUrl()).openStream());
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+          if (sourceImg != null) {
+            float height = sourceImg.getHeight();
+            float width = sourceImg.getWidth();
+            if (width / height < 1.3f) {
+              width = 700 * width / height;
+              temp.setThumbUrl("width: " + width + "px; height: 700px");
+            } else {
+              temp.setThumbUrl("width: 900px");
+            }
+          }
+        }
         String fileName = projectExport.export(pString);
-        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
-            .toUriString();
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/")
+            .path(fileName).toUriString();
         pm.setFileName(fileName);
         pm.setFileDownloadUri(url);
         pdfModels.add(pm);

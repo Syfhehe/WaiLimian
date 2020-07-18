@@ -81,7 +81,6 @@ public class PDFUtil {
       ITextRenderer renderer = new ITextRenderer();
       renderer.setDocumentFromString(htmlTmpStr);
       ITextFontResolver fontResolver = renderer.getFontResolver();
-      // 解决中文支持问题,需要所需字体(ttc)文件
       fontResolver.addFont(ResourceFileUtil.getAbsolutePath(fontFile), BaseFont.IDENTITY_H,
           BaseFont.NOT_EMBEDDED);
       renderer.layout();

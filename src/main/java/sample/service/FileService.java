@@ -46,6 +46,7 @@ public class FileService {
     // 获取当前时间并作为时间戳
     String timeStamp = simpleDateFormat.format(new Date());
     fileName = timeStamp + "And" + fileName;
+    fileName = fileName.replace("&", "");
     try {
       // Check if the file's name contains invalid characters
       if (fileName.contains("..")) {

@@ -14,17 +14,14 @@ import lombok.Data;
 @Data
 public class PDFExportConfig {
 
-  /**
-   * 宋体字体文件相对路径
-   */
   @Value("${pdfExport.fontSimsun}")
   private String fontSimsun;
 
-  /**
-   * 员工绩效考核导出模板文件相对路径
-   */
   @Value("${pdfExport.employeeKpiFtl}")
   private String employeeKpiFtl;
+  
+  @Value("${pdfExport.urlPrefix}")
+  private String urlPrefix;
 
   public String getFontSimsun() {
     return fontSimsun;
@@ -40,6 +37,14 @@ public class PDFExportConfig {
 
   public void setEmployeeKpiFtl(String employeeKpiFtl) {
     this.employeeKpiFtl = employeeKpiFtl;
+  }
+
+  public String getUrlPrefix() {
+    return urlPrefix;
+  }
+
+  public void setUrlPrefix(String urlPrefix) {
+    this.urlPrefix = urlPrefix;
   }
 
 }

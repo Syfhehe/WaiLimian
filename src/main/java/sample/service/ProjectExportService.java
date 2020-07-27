@@ -11,6 +11,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import sample.config.PDFExportConfig;
 import sample.model.FileProperties;
 import sample.model.ProjectString;
 import sample.util.PDFUtil;
+import sample.web.FileController;
 
 /**
  * @Description: 公共业务具体实现类
@@ -27,6 +30,7 @@ import sample.util.PDFUtil;
  */
 @Service("commonService")
 public class ProjectExportService {
+  private static final Logger logger = LoggerFactory.getLogger(ProjectExportService.class);
 
   @Autowired
   private PDFExportConfig pdfExportConfig;
@@ -50,6 +54,7 @@ public class ProjectExportService {
     Map<String, Object> dataMap = new HashMap<>();
     dataMap.put("prjProject", prjProject);
     String htmlStr = PDFUtil.freemarkerRender(dataMap, pdfExportConfig.getEmployeeKpiFtl());
+    //logger.info(htmlStr);
     byte[] pdfBytes = PDFUtil.createPDF(htmlStr, pdfExportConfig.getFontSimsun());
     
     if (pdfBytes != null && pdfBytes.length > 0) {

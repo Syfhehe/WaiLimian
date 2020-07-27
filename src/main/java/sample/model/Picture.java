@@ -73,4 +73,10 @@ public class Picture implements Serializable {
     this.uid = uid;
   }
 
+  @Override
+  public String toString() {
+    return "Picture [id=" + id + ", url=" + url + ", thumbUrl=" + thumbUrl + ", name=" + name
+        + ", uid=" + uid + "]";
+  }
+
 }

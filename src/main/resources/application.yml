@@ -9,9 +9,9 @@ spring:
         cache: false
     datasource:
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://129.226.227.247:3306/testdb?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        url: jdbc:mysql://100.73.91.2:3306/facade_db?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
         username: root
-        password: bqE9ecgj@123
+        password: zhaoshang_admin123
         platform: mysql
 
 spring.jpa.database-platform: org.hibernate.dialect.MySQL5Dialect
@@ -33,12 +33,13 @@ spring.http.multipart.max-request-size: 200MB
 
 spring.mvc.static-path-pattern: /img/**
 
-file.upload-dir: /var/tmp/img/
+#file.upload-dir: /var/tmp/img/
 
-#file.upload-dir: C:/img/
+file.upload-dir: D:/img/
 
 spring.resources.static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/,file:${file.upload-dir},file:/static/
 
 pdfExport:
   fontSimsun: static/fonts/simsun.ttc
   employeeKpiFtl: templates/pdf_export.ftl
+  urlPrefix: http://wlm.cmsk1979.com:8089/projects/img/

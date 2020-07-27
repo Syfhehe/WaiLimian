@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.annotations.ApiOperation;
+import sample.config.PDFExportConfig;
 import sample.model.JsonArrayResult;
 import sample.model.JsonResult;
 import sample.model.UploadFileResponse;
@@ -35,31 +36,8 @@ public class FileController {
   @Autowired
   private FileService fileService;
 
-  @ApiOperation(value = "上传单个文件", notes = "上传单个文件")
-  @PostMapping("/uploadFile")
-  public Object uploadFile(@RequestParam("file") MultipartFile file) {
-    String fileName = fileService.storeFile(file);
-
-    String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/downloadFile/").path(fileName).toUriString();
-
-    UploadFileResponse updateResponse = new UploadFileResponse(fileName, fileDownloadUri,
-        fileDownloadUri, file.getContentType(), file.getSize());
-
-    return new JsonResult<UploadFileResponse>(updateResponse);
-  }
-
-  public UploadFileResponse uploadFileMethod(@RequestParam("file") MultipartFile file) {
-    String fileName = fileService.storeFile(file);
-
-    String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/downloadFile/").path(fileName).toUriString();
-
-    String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
-        .toUriString();
-    return new UploadFileResponse(fileName, url, fileDownloadUri, file.getContentType(),
-        file.getSize());
-  }
+  @Autowired
+  private PDFExportConfig pdfExportConfig;
 
   @ApiOperation(value = "上传多个文件", notes = "上传多个文件")
   @PostMapping("/upload")
@@ -68,6 +46,24 @@ public class FileController {
     List<UploadFileResponse> array =
         Arrays.stream(file).map(this::uploadFileMethod).collect(Collectors.toList());
     return new JsonArrayResult<UploadFileResponse>(array);
+  }
+
+  public UploadFileResponse uploadFileMethod(@RequestParam("file") MultipartFile file) {
+    String fileName = fileService.storeFile(file);
+
+    // String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+    // .path("/downloadFile/").path(fileName).toUriString();
+    //
+    // String url =
+    // ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName)
+    // .toUriString();
+
+    String fileDownloadUri = pdfExportConfig.getUrlPrefix() + "downloadFile/" + fileName;
+
+    String url = pdfExportConfig.getUrlPrefix() + fileName;
+
+    return new UploadFileResponse(fileName, url, fileDownloadUri, file.getContentType(),
+        file.getSize());
   }
 
   @ApiOperation(value = "下载文件", notes = "下载文件")

@@ -1,6 +1,7 @@
 package sample.web;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.annotations.ApiOperation;
+import sample.config.PDFExportConfig;
+import sample.model.FileProperties;
 import sample.model.JsonArrayResult;
 import sample.model.PdfModel;
 import sample.model.Picture;
@@ -26,11 +31,20 @@ import sample.service.ProjectService;
 @RestController
 public class ExportController {
 
+  private static final Logger logger = LoggerFactory.getLogger(ExportController.class);
+
   @Autowired
   private ProjectExportService projectExport;
 
   @Autowired
   private ProjectService projectService;
+
+  @Autowired
+  private PDFExportConfig pdfExportConfig;
+
+  @Autowired
+  private FileProperties fileProperties;
+
 
   /**
    * PDF 文件导出 使用 a 链接即可下载;如果为 ajax/vue,则需要转换为 form 表单格式 eg:
@@ -55,8 +69,12 @@ public class ExportController {
         while (iter.hasNext()) {
           Picture temp = iter.next();
           BufferedImage sourceImg = null;
+
+          String localUrl = "http://localhost:8086/projects/img/" + temp.getUrl().replace(pdfExportConfig.getUrlPrefix(),"");
+          logger.info(localUrl);
+
           try {
-            sourceImg = ImageIO.read(new URL(temp.getUrl()).openStream());
+            sourceImg = ImageIO.read(new URL(localUrl).openStream());
           } catch (IOException e) {
             e.printStackTrace();
           }
@@ -70,10 +88,12 @@ public class ExportController {
               temp.setThumbUrl("width: 900px");
             }
           }
+          temp.setUrl(localUrl);
         }
+        logger.info("pString: " + pString.getPictures().toString());
         String fileName = projectExport.export(pString);
-        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/")
-            .path(fileName).toUriString();
+        // String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/img/").path(fileName).toUriString();
+        String url = pdfExportConfig.getUrlPrefix() + fileName;
         pm.setFileName(fileName);
         pm.setFileDownloadUri(url);
         pdfModels.add(pm);
